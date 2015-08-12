@@ -1,0 +1,16 @@
+{
+    "name": "brognara/youtube-wrapper",
+    "description": "Google API Wrapper",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luca Brognara",
+            "email": "lucabro_2000@yahoo.it"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "phpunit/phpunit": "~4.0",
+        "illuminate/support": "~5.0"
+    }
+}
