@@ -17,4 +17,6 @@ elixir(function(mix) {
     mix.copy('node_modules/angular/angular.js', 'public/angular');
     mix.copy('node_modules/angular/angular-csp.css', 'public/angular');
     mix.sass('app.scss');
+    
+    mix.scripts(['resources/assets/js/app.js'], 'public/js/app.min.js');
 });

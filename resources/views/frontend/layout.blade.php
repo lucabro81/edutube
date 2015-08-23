@@ -110,7 +110,7 @@
         
 </head>
 
-<body>
+<body ng-app="edutube">
     @include('frontend/header')
 
     @yield('content')
@@ -118,8 +118,10 @@
     @include('frontend/footer')
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
-    {!!Html::script('js/bootstrap.js')!!}
-
+    {!!Html::script('bootstrap/js/bootstrap.js')!!}
+    {!!Html::script('angular/angular.js')!!}
+    {!!Html::script('js/app.min.js')!!}
+    
     @yield('js_aggiuntivi')
 </body>
 

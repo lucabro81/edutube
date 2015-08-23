@@ -13,6 +13,10 @@
 
 
 Route::get('/', 'frontend\HomeController@index');
+Route::get('popola-db', 'frontend\HomeController@popola_db');
+Route::get('popola_db_callback', 'frontend\HomeController@popola_db_callback');
+Route::get('crea_utenti', 'frontend\HomeController@crea_utenti');
+
 Route::post('storeauthcode', 'frontend\HomeController@storeauthcode');
 Route::post('get-playlists', 'frontend\HomeController@get_playlists');
 Route::post('get-playlist/{playlist_id}', 'frontend\HomeController@get_playlist');

@@ -1,5 +1,7 @@
 <?php
 
+require('constants.php');
+
 return [
 
     /*

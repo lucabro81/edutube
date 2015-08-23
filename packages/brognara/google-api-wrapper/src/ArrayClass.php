@@ -1,29 +1,31 @@
 <?php namespace Brognara\GoogleAPIWrapper;
 
-class ArrayClass implements \ArrayAccess {
+/*
+ * TODO: usare http://php.net/manual/en/class.arrayiterator.php
+ */
+
+class ArrayClass implements \ArrayAccess, \Iterator {
     
     private $result = array();
-    private $items;
+    private $position = 0;
     
     public function __construct($items) {
-        $this->items = $items;
         
-        //var_dump($items);
-        
-        if (!is_array($this->items)) {
-            if ($this->has_json_data($this->items)) {
-                $this->result = json_decode($this->items, true);
+        if (!is_array($items)) {
+            if ($this->has_json_data($items)) {
+                $this->result = json_decode($items, true);
+            }
+            else if (is_string($items)) {
+                $this->result = $items;
             }
             else {
                 throw new \Exception('No JSON or Array data to parse');
             }
         }
         else {
-            $this->result = $this->items;
+            $this->result = $items;
         }
         
-        //var_dump($this->result);
-        //echo "ArrayClass<br/>";
     }
     
     public function toJson() {
@@ -39,16 +41,12 @@ class ArrayClass implements \ArrayAccess {
     /*
      * 
      */
-    public function offsetExists ($offset) {
-        return isset($this->result[$offset]);
-    }
+    public function offsetExists ($offset) { return isset($this->result[$offset]); }
     
     /*
      * 
      */
-    public function offsetGet ($offset) {
-        return isset($this->result[$offset]) ? $this->result[$offset] : NULL;
-    }
+    public function offsetGet ($offset) { return isset($this->result[$offset]) ? $this->result[$offset] : NULL; }
     
     /*
      * 
@@ -65,21 +63,38 @@ class ArrayClass implements \ArrayAccess {
     /*
      * 
      */
-    public function offsetUnset ($offset) {
-        unset($this->result[$offset]);
-    }
+    public function offsetUnset ($offset) { unset($this->result[$offset]); }
     
     /*
-    public function toObject($obj = null, $items = null) {
-        if (is_array($items)) {
-            foreach($items as $key => $value) {
-                $obj->{$key} = $this->toObject($obj, $value);
-            }
-            return $obj;
-        }
-        return $items;
-    }
-    */
+     * ###########################
+     * # Iterator implementation #
+     * ###########################
+     */
+
+     /*
+      * 
+      */
+    function rewind() { $this->position = 0; }
+    
+     /*
+      * 
+      */
+    function current() { return $this->result[$this->position]; }
+    
+     /*
+      * 
+      */
+    function key() { return $this->position; }
+    
+     /*
+      * 
+      */
+    function next() { ++$this->position; }
+    
+     /*
+      * 
+      */
+    function valid() { return isset($this->result[$this->position]); }
     
     /*
      * ###################

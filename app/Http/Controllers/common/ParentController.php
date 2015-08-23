@@ -13,7 +13,7 @@ class ParentController extends Controller {
     public $dashboard;
 
     public function __construct(){
-        $this->root = URL::to('/');
+        $this->root = \URL::to('/');
     }
 
     /**

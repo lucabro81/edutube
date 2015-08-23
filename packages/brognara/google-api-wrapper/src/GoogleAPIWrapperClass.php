@@ -106,7 +106,8 @@ class GoogleAPIWrapperClass {
             "code"          => $auth_code, 
             "client_id"     => $this->config_data['client_id'], 
             "client_secret" => $this->config_data['client_secret'], 
-            "redirect_uri"  => "postmessage"
+            //"redirect_uri"  => "postmessage"
+            "redirect_uri" => "http://localhost/edutube/public/popola_db_callback"
         );
 
         $postText = http_build_query($post);
@@ -151,7 +152,9 @@ class GoogleAPIWrapperClass {
         $classname = "Brognara\\GoogleAPIWrapper\\services\\".ucfirst(strtolower($this->service)).'Class';
         $service = new $classname;
         
-        return new ArrayClass($service->{'get_'.$field}($results));
+        $get_field = $service->{'get_'.$field}($results, $field);
+        
+        return (count($get_field) == 1) ? $get_field : new ArrayClass($get_field);
     }
     
     public function post() {
