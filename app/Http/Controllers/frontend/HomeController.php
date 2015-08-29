@@ -126,12 +126,14 @@ class HomeController extends ParentController {
             print_r($results);
             echo "</pre>";
             
-            /*foreach ($results as $result) {
+            foreach ($results as $result) {
                 echo "<pre>";
                 print_r($result);
                 echo "</pre>";
-            }*/
+            }/**/
         }
+        
+        // inserisci dati nel 
         
     }
     
