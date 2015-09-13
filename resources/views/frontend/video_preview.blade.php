@@ -3,7 +3,7 @@
     <div class = "video-instruments">
         <div class = "row inner-video-instruments">
             <div class = "buttons col-xs-8">
-                fav - share - enqueue
+                <i class="fa fa-ellipsis-v"></i>
             </div>
             <div class = "categories col-xs-4">
                 Categoria/e
@@ -18,8 +18,9 @@
     @endforeach
 
     <div class = "video-info">
-        Data - {{$featured[$index]->title}}<br>
-        Autore - Loader<br>
+        <p class = "date">{{ date("d/m/Y",strtotime($featured[$index]->created_at)) }}</p>
+        <p class = "title"><a href = "#" title="{{$featured[$index]->title}}">{{str_limit($featured[$index]->title, 60, '...')}}</a></p>
+        <p class = "author"><a href = "#">Autore</a> - <a href = "">Loader</a></p>
     </div>
 
 </div>

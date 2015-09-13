@@ -5999,9 +5999,10 @@ button.close {
   position: relative; }
   .video-prev .video-instruments {
     position: absolute;
-    top: 0px;
+    top: -25%;
     left: 0px;
     width: 100%;
+    background: rgba(0, 0, 0, 0.6);
     text-align: right; }
     .video-prev .video-instruments .inner-video-instruments {
       padding: 3px; }
@@ -6015,5 +6016,18 @@ button.close {
     width: 100%;
     background: rgba(0, 0, 0, 0.6);
     padding: 5px; }
+    .video-prev .video-info a {
+      text-decoration: none;
+      color: #ffffff; }
+    .video-prev .video-info p {
+      padding: 0px;
+      margin: 0px; }
+    .video-prev .video-info .date {
+      font-size: 11px; }
+    .video-prev .video-info .title {
+      font-size: 16px; }
+    .video-prev .video-info .author {
+      font-size: 11px;
+      padding-top: 3px; }
 
 /*# sourceMappingURL=app.css.map */

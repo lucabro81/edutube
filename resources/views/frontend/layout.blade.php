@@ -2,7 +2,8 @@
 <html itemscope itemtype="http://schema.org/Article">
 
 <head>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     
     {!!Html::style('css/app.css')!!}
     
@@ -119,7 +120,7 @@
     @include('frontend/footer')
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
-    {!!Html::script('bootstrap/js/bootstrap.js')!!}
+    {!!Html::script('js/bootstrap.js')!!}
     {!!Html::script('angular/angular.js')!!}
     {!!Html::script('js/app.min.js')!!}
     

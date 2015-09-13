@@ -98,7 +98,42 @@ class HomeController extends ParentController {
         return redirect('https://accounts.google.com/o/oauth2/auth?client_id=842729598744-52ssftbrnhioj2iso2v2qmr9qsl7qk2v.apps.googleusercontent.com&redirect_uri=http%3A%2F%2Flocalhost%2Fedutube%2Fpublic%2Fpopola_db_callback&scope=https://www.googleapis.com/auth/youtube&response_type=code&access_type=offline');
     }
     
+    public function get_playlists_test(Request $request) {
+        $args = array('mine'         => 'true',
+                      'part'         => 'snippet',
+                      'maxResults'   => 50,
+                      'access_token' => $request->session()->get('access_token'));
+        
+        return GW::youtube('playlists')
+            ->with($args)
+            ->get("id");
+    }
+    
+    public function get_playlistItems_test(Request $request, $id) {
+        $args = array('mine'         => 'true',
+                      'part'         => 'snippet',
+                      'playlistId'   => $id,
+                      'maxResults'   => 50,
+                      'access_token' => $request->session()->get('access_token'));
+
+        return GW::youtube('playlistItems')
+            ->with($args)
+            ->get("items/*/snippet/resourceId/videoId");
+    }
+    
+    public function get_videos_test(Request $request, $videoId) {
+        $args = array('part'         => 'snippet',
+                      'id'           => $videoId,
+                      'access_token' => $request->session()->get('access_token'));
+        
+        return GW::youtube('videos')
+            ->with($args)
+            ->get("items");
+    }
+    
     public function popola_db_callback(Request $request) {
+        
+        set_time_limit(0);
         
         $credentials = [
             'login' => 'lucabro_2000@yahoo.it',
@@ -110,43 +145,53 @@ class HomeController extends ParentController {
         
         $request->session()->put('access_token', $decode_results['access_token']);
         
-        $args = array('mine'         => 'true',
-                      'part'         => 'snippet',
-                      'maxResults'   => 50,
-                      'access_token' => $request->session()->get('access_token'));
+        $playlists_prese = false;
+        while(!$playlists_prese) {
+            try {
+                $playlists_id = $this->get_playlists_test($request);
+                $playlists_prese = true;
+                
+            }
+            catch(\Exception $e) {
+                $playlists_prese = false;
+            }
+        }
         
-        $playlists_id = GW::youtube('playlists')
-            ->with($args)
-            ->get("id");
+        $categories = DB::table('categorynames')->get();
         
         foreach($playlists_id as $id) {
-            $args = array('mine'         => 'true',
-                          'part'         => 'snippet',
-                          'playlistId'   => $id,
-                          'maxResults'   => 50,
-                          'access_token' => $request->session()->get('access_token'));
-        
-            $results = GW::youtube('playlistItems')
-                ->with($args)
-                ->get("items/*/snippet/resourceId/videoId");
+            
+            $playlistItems_prese = false;
+            while(!$playlistItems_prese) {
+                try {
+                    $results = $this->get_playlistItems_test($request, $id);
+                    $playlistItems_prese = true;
+                    
+                }
+                catch(\Exception $e) {
+                    $playlistItems_prese = false;
+                }
+            }
             
             foreach ($results as $key => $videoId) {
-                $args = array('part'         => 'snippet',
-                              'id'           => $videoId,
-                              'access_token' => $request->session()->get('access_token'));
-        
-                $videos = GW::youtube('videos')
-                    ->with($args)
-                    ->get("items");
+                
+                $videos_prese = false;
+                while(!$videos_prese) {
+                    try {
+                        $videos = $this->get_videos_test($request, $videoId);
+                        $videos_prese = true;
+                    }
+                    catch(\Exception $e) {
+                        $videos_prese = false;
+                    }
+                }
                 
                 foreach ($videos as $key => $video) {
                     
                     $channel_id     = $video[0]["snippet"]["channelId"];
                     $channel_title  = $video[0]["snippet"]["channelTitle"];
-                    
                     $title          = $video[0]["snippet"]["title"];
-                    $description    = $video[0]["snippet"]["description"];
-                    
+                    $description    = $video[0]["snippet"]["description"];                 
                     $tags           = (isset($video[0]["snippet"]["tags"])) ? $video[0]["snippet"]["tags"] : NULL;
                     $thumbnails     = $video[0]["snippet"]["thumbnails"];
                     
@@ -194,7 +239,7 @@ class HomeController extends ParentController {
                             }
 
                             $tag_record = DB::table("post_tag")->insert(array("post_id" => $post->id,
-                                                                    "tag_id" => $tag_id));
+                                                                               "tag_id" => $tag_id));
                         }
                     }
                     
@@ -209,22 +254,31 @@ class HomeController extends ParentController {
                                                                                       "slug" => Str::slug("thubnail_".$thumb_key),
                                                                                    "user_id" => $user->id,
                                                                               "mediatype_id" => DB::table("mediatypes")
-                                                                                                ->where("ext", "jpg")
-                                                                                                ->first()
-                                                                                                ->id));
+                                                                                                    ->where("ext", "jpg")
+                                                                                                    ->first()
+                                                                                                    ->id));
                         }
                         else {
                             $thumbnail_id = $thumbnail_record->id;
                         }
                         
                         $thumbnail_record = DB::table("mediafile_post")->insert(array("post_id" => $post->id,
-                                                                      "mediafile_id" => $thumbnail_id));
+                                                                                 "mediafile_id" => $thumbnail_id));
+                    }
+                    
+                    // INSERT CATEGORIES
+                    echo "// INSERT IMAGES <br>";
+                    for ($i = 0; $i < rand(1, 5); $i++){
+                        $rand_categories_index = rand(0,(count($categories)-1));
+                        
+                        DB::table("categoryname_post")->insert(array("post_id" => $post->id,
+                                                             "categoryname_id" => $categories[$rand_categories_index]->id));
                     }
                 }
             }
         }
         
-        // inserisci dati nel 
+        set_time_limit(30);
         
     }
     
