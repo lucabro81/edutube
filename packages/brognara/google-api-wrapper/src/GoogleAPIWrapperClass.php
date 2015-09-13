@@ -2,7 +2,6 @@
 
 /*use Illuminate\Http\Request;
 
-
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the GNU Lesser General Public License
  * (LGPL) version 2.1 which accompanies this distribution, and is available at
@@ -35,8 +34,8 @@ class GoogleAPIWrapperClass {
     private $service  = '';
     private $query    = '';
     
-    /*
-     * Constructor
+    /**
+     * Cosntructor
      */
     public function __construct() {
         
@@ -52,6 +51,13 @@ class GoogleAPIWrapperClass {
         
     }
     
+    /**
+     * 
+     * @param type $method
+     * @param type $arguments
+     * @return \Brognara\GoogleAPIWrapper\GoogleAPIWrapperClass
+     * @throws \Exception
+     */
     function __call($method, $arguments) {
         
         $norm_method = strtoupper($method);
@@ -69,8 +75,11 @@ class GoogleAPIWrapperClass {
         throw new \Exception("Service ".$norm_method." not enbled or invalid");
     }
     
-    /*
+    /**
      * Create necessary js to use google apis
+     * 
+     * @param type $config_data
+     * @return type
      */
     public function google_js($config_data = array()) {
         
@@ -90,15 +99,17 @@ class GoogleAPIWrapperClass {
         
     }
     
-    /*
+    /**
      * 
      */
     public function get_refresh_token() {
         
     }
     
-    /*
+    /**
      * 
+     * @param type $auth_code
+     * @return \Brognara\GoogleAPIWrapper\ArrayClass
      */
     public function get_access_token($auth_code) {
         $post = array(
@@ -121,7 +132,6 @@ class GoogleAPIWrapperClass {
                            CURLOPT_SSL_VERIFYPEER => false,
                            CURLOPT_SSL_VERIFYHOST => false);
         
-        
         return new ArrayClass($this->cURL($args_curl));
     }
     
@@ -132,11 +142,13 @@ class GoogleAPIWrapperClass {
      */
     
     
-    /*
+    /**
      * Which api?
+     * 
+     * @param type $field
+     * @return \Brognara\GoogleAPIWrapper\ArrayClass
      */
     public function get($field = '') {
-        
         
         $this->curl_opt[CURLOPT_POST]           = false;
         $this->curl_opt[CURLOPT_CONNECTTIMEOUT] = 2;
@@ -168,8 +180,11 @@ class GoogleAPIWrapperClass {
         return new ArrayClass(($this->cURL($this->curl_opt)));
     }
     
-    /*
+    /**
      * Which arguments?
+     * 
+     * @param type $args
+     * @return \Brognara\GoogleAPIWrapper\GoogleAPIWrapperClass
      */
     public function with($args) {
         $this->query = http_build_query($args);
@@ -182,6 +197,11 @@ class GoogleAPIWrapperClass {
      * ###################
      */
     
+    /**
+     * 
+     * @param type $args
+     * @return type
+     */
     private function cURL($args) {
         $ch = curl_init();
         

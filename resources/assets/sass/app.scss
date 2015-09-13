@@ -1,2 +1,36 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+#main {
+    color: #ffffff;
+}
+
+.video-prev {
+    overflow:hidden;
+    position: relative;
+    
+    .video-instruments {
+        position: absolute;
+        top:0px;
+        left:0px;
+        width: 100%;
+        text-align: right;
+        
+        .inner-video-instruments {
+            padding: 3px;
+        }
+        
+        .buttons {
+            text-align: left;
+        }
+    }
+    
+    .video-info {
+        position: absolute; 
+        bottom:-50%; 
+        left: 0px; 
+        height: 50%; 
+        width:100%; 
+        background: rgba(0, 0, 0, 0.6);
+        padding: 5px;
+    }
+}

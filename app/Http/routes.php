@@ -21,3 +21,7 @@ Route::post('storeauthcode', 'frontend\HomeController@storeauthcode');
 Route::post('get-playlists', 'frontend\HomeController@get_playlists');
 Route::post('get-playlist/{playlist_id}', 'frontend\HomeController@get_playlist');
 Route::post('get-video/{video_id}', 'frontend\HomeController@get_video');
+
+/*Route::get('/', function(){
+    return "sticazzi";
+});*/

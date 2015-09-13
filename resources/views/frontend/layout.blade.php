@@ -2,6 +2,7 @@
 <html itemscope itemtype="http://schema.org/Article">
 
 <head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     
     {!!Html::style('css/app.css')!!}
     

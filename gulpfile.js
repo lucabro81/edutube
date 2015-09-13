@@ -18,5 +18,10 @@ elixir(function(mix) {
     mix.copy('node_modules/angular/angular-csp.css', 'public/angular');
     mix.sass('app.scss');
     
-    mix.scripts(['resources/assets/js/app.js'], 'public/js/app.min.js');
+    mix.scripts(
+            [
+                'resources/assets/js/app.js', 
+                'resources/assets/js/utility.js',
+                'resources/assets/js/frontend.js'
+            ], 'public/js/app.min.js');
 });

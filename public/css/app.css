@@ -5991,4 +5991,29 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+#main {
+  color: #ffffff; }
+
+.video-prev {
+  overflow: hidden;
+  position: relative; }
+  .video-prev .video-instruments {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    text-align: right; }
+    .video-prev .video-instruments .inner-video-instruments {
+      padding: 3px; }
+    .video-prev .video-instruments .buttons {
+      text-align: left; }
+  .video-prev .video-info {
+    position: absolute;
+    bottom: -50%;
+    left: 0px;
+    height: 50%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 5px; }
+
 /*# sourceMappingURL=app.css.map */

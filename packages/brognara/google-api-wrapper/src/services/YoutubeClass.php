@@ -17,29 +17,76 @@ class YoutubeClass {
         
     }
     
-    public function __call($method, $args) { //$results = NULL, $field = '') {
-        
-        // TODO:
-        // controllo nome metodo
+    public function __call($method, $args) {
         
         $results = $args[0];
         $field = $args[1];
         
-        $array_results = json_decode($results, TRUE);
+        // $path = (count(explode("/", $field))>1) ? explode("/", $field) : $field;
+                            
+        // TODO:
+        // forse una specie di xPath
         
+        $path = explode("/", $field);
+        
+        $array_results = json_decode($results, TRUE);
+                
         $array_result = array();
-        $this->get_item_at_key($array_results, $field, $array_result);
+        if (count($path)>1) {
+            $array_result = $this->get_items_by_path($path, $array_results);
+        }
+        else {
+            $this->get_item_at_key($array_results, $path[0], $array_result);
+        }
+        
+        //print_r($array_result);
         
         return $array_result;
+    }
+    
+    /**
+     * 
+     * @param type $path
+     * @param type $array_da_cercare
+     * @param type $array_result
+     * @param type $i
+     * @return type
+     */
+    private function get_items_by_path($path, $array_da_cercare, &$array_result = array(), $i = 0) {
+        
+        if (isset($path[$i])) {
+            foreach ($array_da_cercare as $key => $item) {
+                if (($key === $path[$i])||($path[$i] === '*')) {
+
+                    if ($i == (count($path)-1)) { 
+                    //if (count($path) == 1) { 
+                        $array_result[] = $item;
+                    }
+
+                    $this->get_items_by_path($path, $item, $array_result, $i+1);
+                    //get_items_by_path(array_slice($path, 1), $item, $array_result, $i+1);
+                }
+            }
+	}
+
+	return $array_result;
     }
     
     private function get_item_at_key($heystack, $needle, &$array_tmp) {
         
         if (is_array($heystack)) {
             foreach($heystack as $key => $element) {
-                if ($key === $needle) { return $element; }
+                
+                if ($key === $needle) { 
+                    return $array_tmp[] = $element; 
+                }
+                
                 $result = $this->get_item_at_key($element, $needle, $array_tmp);
-                if ($result != NULL) { $array_tmp[] = $result; }
+                
+                if ($result != NULL) { 
+                    $array_tmp[] = $result; 
+                }
+                
             }
         }
 

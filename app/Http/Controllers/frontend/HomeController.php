@@ -17,8 +17,9 @@ use App\Statustype;
 use App\Statusname;
 use App\Mediatype;
 use App\Categoryname;
+use App\Post;
 
-use App\Http\Requests;
+//use App\Http\Requests;
 
 class HomeController extends ParentController {
     
@@ -31,7 +32,7 @@ class HomeController extends ParentController {
         $post_obj = new PostContainer();
         
         try {
-            $posts = $post_obj->read();
+            $posts = $post_obj->read(['featured' => -1]);
         } 
         catch (Exception $ex) {
             
@@ -99,7 +100,14 @@ class HomeController extends ParentController {
     
     public function popola_db_callback(Request $request) {
         
-        $decode_results = GW::get_access_token($request->get('code'));
+        $credentials = [
+            'login' => 'lucabro_2000@yahoo.it',
+        ];
+
+        $user = Sentinel::findByCredentials($credentials);
+        
+        $decode_results = GW::get_access_token($request->get('code'));        
+        
         $request->session()->put('access_token', $decode_results['access_token']);
         
         $args = array('mine'         => 'true',
@@ -120,17 +128,100 @@ class HomeController extends ParentController {
         
             $results = GW::youtube('playlistItems')
                 ->with($args)
-                ->get("id");
+                ->get("items/*/snippet/resourceId/videoId");
             
-            echo "<pre>";
-            print_r($results);
-            echo "</pre>";
-            
-            foreach ($results as $result) {
-                echo "<pre>";
-                print_r($result);
-                echo "</pre>";
-            }/**/
+            foreach ($results as $key => $videoId) {
+                $args = array('part'         => 'snippet',
+                              'id'           => $videoId,
+                              'access_token' => $request->session()->get('access_token'));
+        
+                $videos = GW::youtube('videos')
+                    ->with($args)
+                    ->get("items");
+                
+                foreach ($videos as $key => $video) {
+                    
+                    $channel_id     = $video[0]["snippet"]["channelId"];
+                    $channel_title  = $video[0]["snippet"]["channelTitle"];
+                    
+                    $title          = $video[0]["snippet"]["title"];
+                    $description    = $video[0]["snippet"]["description"];
+                    
+                    $tags           = (isset($video[0]["snippet"]["tags"])) ? $video[0]["snippet"]["tags"] : NULL;
+                    $thumbnails     = $video[0]["snippet"]["thumbnails"];
+                    
+                    $videoId        = $video[0]["id"];
+                    
+                    // INSERT/RETRIEVE OWNER OF THE VIDEO
+                    $YT_owner = DB::table("yt_owners")->where("channel_id", $channel_id)->first();
+                    
+                    if ($YT_owner == NULL) {
+                        $yt_owner_id = DB::table("yt_owners")->insertGetId(array("channel_id" => $channel_id,
+                                                                              "channel_title" => $channel_title));
+                    }
+                    else {
+                        $yt_owner_id = $YT_owner->id;
+                    }
+                    
+                    // INSERT POST
+                    echo "// INSERT POST <br>";
+                    $post = new Post;
+                    $post->YT_id = $videoId;
+                    $post->title = $title;
+                    $post->description = $description;
+                    $post->slug = Str::slug($user->id."-".$title);
+                    $post->main = true;
+                    $post->featured = true;
+                    $post->visible = true;
+                    $post->page = 0;
+                    $post->user_id = $user->id;
+                    $post->YT_owner = $yt_owner_id;
+                    $post->save();
+                    
+                    // INSERT TAGS
+                    echo "// INSERT TAGS <br>";
+                    if ($tags != NULL) {
+                        foreach ($tags as $tag) {
+                            $tag_record = DB::table("tags")->where("slug", Str::slug($tag))->first();
+
+                            if ($tag_record == NULL) {
+                                $tag_id = DB::table("tags")->insertGetId(array("nome" => $tag,
+                                                                               "slug" => Str::slug($tag),
+                                                                            "user_id" => $user->id));
+                            }
+                            else {
+                                $tag_id = $tag_record->id;
+                            }
+
+                            $tag_record = DB::table("post_tag")->insert(array("post_id" => $post->id,
+                                                                    "tag_id" => $tag_id));
+                        }
+                    }
+                    
+                    // INSERT IMAGES
+                    echo "// INSERT IMAGES <br>";
+                    foreach ($thumbnails as $thumb_key => $thumbnail) {
+                        $thumbnail_record = DB::table("mediafiles")->where("url", $thumbnail["url"])->first();
+                        
+                        if ($thumbnail_record == NULL) {
+                            $thumbnail_id = DB::table("mediafiles")->insertGetId(array("url" => $thumbnail["url"],
+                                                                                      "nome" => "thubnail_".$thumb_key,
+                                                                                      "slug" => Str::slug("thubnail_".$thumb_key),
+                                                                                   "user_id" => $user->id,
+                                                                              "mediatype_id" => DB::table("mediatypes")
+                                                                                                ->where("ext", "jpg")
+                                                                                                ->first()
+                                                                                                ->id));
+                        }
+                        else {
+                            $thumbnail_id = $thumbnail_record->id;
+                        }
+                        
+                        $thumbnail_record = DB::table("mediafile_post")->insert(array("post_id" => $post->id,
+                                                                      "mediafile_id" => $thumbnail_id));
+                    }
+                }
+            }
         }
         
         // inserisci dati nel 

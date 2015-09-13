@@ -17,14 +17,23 @@ class PostContainer extends RecordContainer {
     // CRUD //
     //////////
 
+    /**
+     * 
+     * @param type $input
+     */
     public function create($input) {
 
     }
 
+    /**
+     * 
+     * @param type $args
+     * @return type
+     */
     public function read($args = array('featured' => 3,
                                    'not_featured' => 15,
                                            'main' => true)) {
-        
+                
         // selezione di un unico post
         if (isset($args['id'])) {
             return Post::where('id',$args['id'])->with('author')->first();
@@ -34,23 +43,33 @@ class PostContainer extends RecordContainer {
         
         $posts = array();
         
-        if ($args['featured'] > 0) {
+        if (isset($args['featured'])) {
             $posts['featured'] = $this->featured($args['featured']);
         }
-        if ($args['not_featured'] > 0) {
+        
+        if (isset($args['not_featured'])) {
             $posts['not_featured'] = $this->not_featured($args['not_featured']);
         }
-        if ($args['main']) {
+        
+        if (isset($args['main']) && ($args['main'])) {
             $posts['main'] = $this->main_post();
         }
         
         return $posts;
     }
 
+    /**
+     * 
+     * @param type $input
+     */
     public function update($input) {
 
     }
     
+    /**
+     * 
+     * @param type $args
+     */
     public function delete($args) {
 
     }
@@ -59,6 +78,9 @@ class PostContainer extends RecordContainer {
     // UTILITY //
     /////////////
     
+    /**
+     * 
+     */
     public function restore_dati() {
         $this->create();
     }
@@ -67,21 +89,47 @@ class PostContainer extends RecordContainer {
     // PRIVATE //
     /////////////
     
-    private function featured($limit=3) {
-        return Post::where('featured',true)
-            ->with('author')
-            ->take($limit)
-        ->get();
+    /**
+     * 
+     * @param type $limit
+     * @return type
+     */
+    private function featured($limit = 3) {
+        
+        $posts = Post::where('featured',true)
+            ->with('author');
+        
+        if ($limit>-1) {
+            $posts->take($limit);
+        }
+        
+        return $posts->get();
     }
     
-    private function not_featured($limit=15) {
-        return Post::where('featured',false)
+    /**
+     * 
+     * @param type $limit
+     * @return type
+     */
+    private function not_featured($paginate = 15) {
+        
+        $posts = Post::where('featured',false)
             ->where('visible',true)
             ->where('page',false)
             ->with('author')
-	->paginate($limit);
+            ->with('mediafiles');
+        
+        if ($paginate>-1) {
+            return $posts->paginate($paginate);
+        }
+        
+        return $posts->get();
     }
     
+    /**
+     * 
+     * @return type
+     */
     private function main_post() {
         return Post::where('main',true)
             ->with('author')

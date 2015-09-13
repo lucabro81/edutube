@@ -10,14 +10,29 @@
     <button id = "playlistButton" style="display:none">Vediamo ste cazzo di playlist</button>
     <div id="result"></div-->
     
-    <div id="main">
-        <div class="container-fluids">
-            <div class="row">
-                <div class="col-sm-12">
-                    main content
-                </div>
+   <?php
+   
+   $featured = $posts['featured'];
+   $count_featured = count($featured);
+  
+   
+   $cols = 6;
+   $rows = 0;
+   
+   $index = 0;
+   
+   $rows = ceil($count_featured/$cols);
+   
+   ?>
+    <div class="container-fluid" id="main">
+        @for($j = 1; $j<=$rows; $j++)
+            <div class="row video-prev-row" id="video-prev-row-{{$j}}">
+                @for($i = 1; $i <= $cols; $i++)
+                    @include('frontend/video_preview', ['post' => $featured[$index], 'index' => $index])
+                    <?php $index += 1; ?>
+                @endfor
             </div>
-        </div>
+        @endfor
     </div>
 
 @stop()

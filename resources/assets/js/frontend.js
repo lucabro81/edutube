@@ -1,18 +1,3 @@
-var app = angular.module('edutube', []);
-function baseUrl() {
-	var win_loc = window.location;
-	if (win_loc.host === 'localhost') {
-            return win_loc.protocol + "//" + win_loc.host + "/edutube/public/";
-	}
-	return win_loc.protocol + "//" + win_loc.host + "/remote/host/path/";
-};
-
-function debug_console(msg) {
-	var win_loc = window.location;
-	if (win_loc.host === 'localhost') {
-		console.log(msg);
-	}
-}
 // HANDLERS
 
 var items = {
@@ -96,4 +81,3 @@ $(document).ready(function(){
         }
     );
 });
-//# sourceMappingURL=app.min.js.map

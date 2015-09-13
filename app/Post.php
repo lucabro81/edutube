@@ -12,14 +12,14 @@ class Post extends Model
     protected $table = 'posts';
     
     public function author() {
-        return $this->hasOne('User');
+        return $this->belongsTo('App\User');
     }
     
     public function relateds() {
-        return $this->hasMany('Related', 'related_id', 'id');
+        return $this->hasMany('App\Related', 'related_id', 'id');
     }
     
     public function mediafiles() {
-        return $this->belongsToMany('Mediafile');
+        return $this->belongsToMany('App\Mediafile');
     }
 }

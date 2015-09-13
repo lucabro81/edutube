@@ -15,6 +15,7 @@ class CancellaTabelleSeeder extends Seeder {
             DB::table('relateds')->delete();
             
             DB::table('posts')->delete();
+            DB::table('yt_owners')->delete();
             
             DB::table('categorynames')->update(array('parent_id'=>NULL));
             DB::table('categorynames')->delete();
