@@ -22,4 +22,8 @@ class Post extends Model
     public function mediafiles() {
         return $this->belongsToMany('App\Mediafile');
     }
+    
+    public function categories() {
+        return $this->belongsToMany('App\Categoryname');
+    }
 }

@@ -1,12 +1,12 @@
 // HANDLERS
 
 var items = {
-	'videoPrev'   : null
+    'videoPrev'     : null
 }
 
 var utils = {
-	'width_window'  : 0,
-	'height_window' : 0
+    'width_window'  : 0,
+    'height_window' : 0
 }
 
 // HANDLERS
@@ -86,6 +86,14 @@ $(document).ready(function(){
             $(this).children('.video-instruments').stop(true).animate({
                 'top' : '-25%'
             }, 200);
+            
+            // dropdown categories collapse
+            $(this).find('.first-category').attr('aria-expanded',false);
+            $(this).find('.first-category').parent().removeClass('open');
+            
+            // dropdown video options
+            $(this).find('.video-options').attr('aria-expanded',false);
+            $(this).find('.video-options').parent().removeClass('open');
         }
     );
 });

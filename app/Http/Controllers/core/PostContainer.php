@@ -97,7 +97,10 @@ class PostContainer extends RecordContainer {
     private function featured($limit = 3) {
         
         $posts = Post::where('featured',true)
-            ->with('author');
+            ->where('page',false)
+            ->with('author')
+            ->with('mediafiles')
+            ->with('categories');
         
         if ($limit>-1) {
             $posts->take($limit);
@@ -117,7 +120,8 @@ class PostContainer extends RecordContainer {
             ->where('visible',true)
             ->where('page',false)
             ->with('author')
-            ->with('mediafiles');
+            ->with('mediafiles')
+            ->with('categoryname');
         
         if ($paginate>-1) {
             return $posts->paginate($paginate);

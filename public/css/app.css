@@ -6002,10 +6002,67 @@ button.close {
     top: -25%;
     left: 0px;
     width: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    text-align: right; }
+    background: rgba(255, 255, 255, 0.6);
+    text-align: right;
+    color: #000000; }
+    .video-prev .video-instruments a {
+      text-decoration: none;
+      color: #ffffff;
+      border: 0px;
+      border-radius: 0; }
     .video-prev .video-instruments .inner-video-instruments {
       padding: 3px; }
+      .video-prev .video-instruments .inner-video-instruments a.video-options {
+        color: #000000; }
+      .video-prev .video-instruments .inner-video-instruments .storia {
+        background-color: #FBB829; }
+        .video-prev .video-instruments .inner-video-instruments .storia li a:hover {
+          background: #eda304; }
+      .video-prev .video-instruments .inner-video-instruments .scienza {
+        background-color: #543511; }
+        .video-prev .video-instruments .inner-video-instruments .scienza li a:hover {
+          background: #2a1a08; }
+      .video-prev .video-instruments .inner-video-instruments .tecnologia {
+        background-color: #F02311; }
+        .video-prev .video-instruments .inner-video-instruments .tecnologia li a:hover {
+          background: #c21b0c; }
+      .video-prev .video-instruments .inner-video-instruments .storia-della-scienza {
+        background-color: #7FAF1B; }
+        .video-prev .video-instruments .inner-video-instruments .storia-della-scienza li a:hover {
+          background: #5f8314; }
+      .video-prev .video-instruments .inner-video-instruments .fisica {
+        background-color: #FF9999; }
+        .video-prev .video-instruments .inner-video-instruments .fisica li a:hover {
+          background: #ff6666; }
+      .video-prev .video-instruments .inner-video-instruments .chimica {
+        background-color: #327CCB; }
+        .video-prev .video-instruments .inner-video-instruments .chimica li a:hover {
+          background: #2863a2; }
+      .video-prev .video-instruments .inner-video-instruments .dropdown-video-options {
+        margin-left: 15px;
+        margin-top: 6px;
+        border: 0px;
+        box-shadow: none;
+        border-radius: 0px;
+        color: #ffffff; }
+        .video-prev .video-instruments .inner-video-instruments .dropdown-video-options li a {
+          padding: 3px; }
+        .video-prev .video-instruments .inner-video-instruments .dropdown-video-options li a:hover {
+          color: #ffffff; }
+      .video-prev .video-instruments .inner-video-instruments .dropdown-category {
+        background: none;
+        text-align: right;
+        padding-right: 15px;
+        border: 0px;
+        border-radius: 0px;
+        box-shadow: none; }
+        .video-prev .video-instruments .inner-video-instruments .dropdown-category li {
+          padding: 3px; }
+        .video-prev .video-instruments .inner-video-instruments .dropdown-category li a {
+          display: inline-block !important;
+          padding: 1px 5px; }
+        .video-prev .video-instruments .inner-video-instruments .dropdown-category li a:hover {
+          color: #ffffff; }
     .video-prev .video-instruments .buttons {
       text-align: left; }
   .video-prev .video-info {

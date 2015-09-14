@@ -1,5 +1,26 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
+$category-storia: #FBB829; // Giallo
+$category-scienza: #543511; // Marrone
+$category-tecnologia: #F02311; // Rosso 
+$category-storia-della-scienza: #7FAF1B; // Verde
+$category-fisica: #FF9999; // Rosa
+$category-chimica: #327CCB; // Blu
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin setBgColorAndHover($baseColor) {
+    background-color: $baseColor
+    &:hover {
+        background-color: darken($baseColor, 5%)
+    }
+}
+
 #main {
     color: #ffffff;
 }
@@ -13,16 +34,98 @@
         top:-25%;
         left:0px;
         width: 100%;
-        background: rgba(0, 0, 0, 0.6);
+        background: rgba(255, 255, 255, 0.6);
         text-align: right;
+        color: #000000;
         
-        .inner-video-instruments {
+        a { 
+            text-decoration: none; 
+            color: #ffffff;
+            border: 0px;
+            @include border-radius(0);
+            
+        }
+        
+        .inner-video-instruments { 
             padding: 3px; 
+            
+            a.video-options {
+                color: #000000;
+            }
+            
+            .storia { 
+                background-color: $category-storia; 
+                li a:hover {
+                    background: darken($category-storia, 10%)
+                }
+            }       
+            .scienza { 
+                background-color: $category-scienza; 
+                li a:hover {
+                    background: darken($category-scienza, 10%)
+                }
+            }
+            .tecnologia { 
+                background-color: $category-tecnologia; 
+                li a:hover {
+                    background: darken($category-tecnologia, 10%)
+                }
+            }
+            .storia-della-scienza { 
+                background-color: $category-storia-della-scienza; 
+                li a:hover {
+                    background: darken($category-storia-della-scienza, 10%)
+                }
+            }
+            .fisica { 
+                background-color: $category-fisica; 
+                li a:hover {
+                    background: darken($category-fisica, 10%)
+                }
+            }
+            .chimica { 
+                background-color: $category-chimica; 
+                li a:hover {
+                    background: darken($category-chimica, 10%)
+                }
+            }
+            
+            
+            
+            .dropdown-video-options {
+                margin-left: 15px;
+                margin-top: 6px;
+                border: 0px;
+                box-shadow: none;
+                border-radius: 0px;
+                color: #ffffff;
+                li a {
+                    padding: 3px;
+                }
+                li a:hover { color: #ffffff }
+            }
+            
+            .dropdown-category {
+                background: none;
+                text-align: right;
+                padding-right: 15px;
+                
+                border: 0px;
+                border-radius: 0px;
+                box-shadow: none;
+                
+                li {
+                    padding: 3px;
+                }
+                li a {
+                    display: inline-block !important;
+                    padding: 1px 5px;
+                }
+                li a:hover { color: #ffffff }
+            }
         }
+        .buttons { text-align: left; }
         
-        .buttons {
-            text-align: left;
-        }
     }
     
     .video-info {
@@ -36,6 +139,7 @@
         
         a { text-decoration: none; color: #ffffff}
         p { padding: 0px; margin: 0px; }
+        
         .date { font-size: 11px; }
         .title { font-size: 16px; }
         .author { font-size: 11px; padding-top: 3px}
