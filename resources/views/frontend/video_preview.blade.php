@@ -1,8 +1,8 @@
-<div class="col-sm-2 video-prev" id="video-prev-{{$featured[$index]->id}}" style="overflow:visible">
+<div class="video-prev" id="video-prev-{{$featured[$index]->id}}">
     
-    <div class = "video-instruments" style="z-index: 1000000">
+    <!--div class = "video-instruments">
         <div class = "row inner-video-instruments">
-            <div class = "buttons col-xs-6">
+            <div class = "buttons col-xs-3">
                 <a href="#" 
                    accesskey=""
                    class="dropdown-toggle video-options" 
@@ -12,16 +12,16 @@
                    aria-expanded="false"><i class="glyphicon glyphicon-option-vertical"></i></a>
                    
                 <ul class="dropdown-menu dropdown-video-options {{str_slug($featured[$index]->categories[0]->name)}}">
-                    <li><a href="#">Info</a></li>
-                    <li><a href="#">Accoda</a></li>
-                    <li><a href="#">Favoriti</a></li>
-                    <li><a href="#">Aggiungi a... </a></li>
-                    <li><a href="#">Segnala</a></li>
-                    <li><a href="#">Correlati</a></li>
-                    <li><a href="#">Condividi</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-info-sign"></i> Info</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-play-circle"></i> Accoda</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-heart-empty"></i> Favoriti</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-plus-sign"></i> Aggiungi a... </a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-flag"></i> Segnala</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-film"></i> Correlati</a></li>
+                    <li><a href="#"><i class="glyphicon glyphicon-share"></i> Condividi</a></li>
                 </ul>
             </div>
-            <div class = "categories col-xs-6">
+            <div class = "categories col-xs-9">
                 <a href="#" 
                    accesskey=""
                    class="dropdown-toggle first-category btn btn-primary btn-xs {{str_slug($featured[$index]->categories[0]->name)}}" 
@@ -44,22 +44,22 @@
                 
             </div>
         </div>
-    </div>
+    </div-->
     
-    <div class="row">
-        <div class="col-xs-12" style="overflow:hidden">
+    <!--div class="row video-img"-->
+        <div class="inner-video-img">
             @foreach ($featured[$index]->mediafiles as $mediafile)
                 @if ($mediafile['nome'] === 'thubnail_medium')
-                    <img class="hidden-xs" src="{{$mediafile['url']}}">
+                    <img src="{{$mediafile['url']}}">
                 @endif
             @endforeach
         </div>
-    </div>
+    <!--/div-->
 
-    <div class = "video-info">
+    <!--div class = "video-info">
         <p class = "date">{{ date("d/m/Y",strtotime($featured[$index]->created_at)) }}</p>
         <p class = "title"><a href = "#" title="{{$featured[$index]->title}}">{{str_limit($featured[$index]->title, 60, '...')}}</a></p>
         <p class = "author"><a href = "#">Autore</a> - <a href = "">Loader</a></p>
-    </div>
+    </div-->
 
 </div>

@@ -117,13 +117,13 @@
 
     @yield('content')
 
-    @include('frontend/footer')
+    {{--@include('frontend/footer')--}}
 
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
     {!!Html::script('js/bootstrap.js')!!}
     {!!Html::script('angular/angular.js')!!}
     {!!Html::script('js/app.min.js')!!}
-    
+    {!!Html::script('js/isotope.pkgd.min.js')!!}
     @yield('js_aggiuntivi')
 </body>
 

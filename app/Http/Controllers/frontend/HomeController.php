@@ -251,6 +251,8 @@ class HomeController extends ParentController {
                         if ($thumbnail_record == NULL) {
                             $thumbnail_id = DB::table("mediafiles")->insertGetId(array("url" => $thumbnail["url"],
                                                                                       "nome" => "thubnail_".$thumb_key,
+                                                                                     "width" => $thumbnail["width"],
+                                                                                    "height" => $thumbnail["height"],
                                                                                       "slug" => Str::slug("thubnail_".$thumb_key),
                                                                                    "user_id" => $user->id,
                                                                               "mediatype_id" => DB::table("mediatypes")

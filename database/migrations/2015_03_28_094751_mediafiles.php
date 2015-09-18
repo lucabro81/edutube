@@ -16,6 +16,8 @@ class Mediafiles extends Migration {
             $table->increments('id');
 
             $table->string('url', 200);
+            $table->integer('width');
+            $table->integer('height');
             $table->string('nome', 100);
             $table->string('slug', 100);
 

@@ -5995,16 +5995,21 @@ button.close {
   color: #ffffff; }
 
 .video-prev {
-  overflow: hidden;
-  position: relative; }
+  width: 22%; }
+  .video-prev .gutter-sizer {
+    width: 4%; }
   .video-prev .video-instruments {
     position: absolute;
-    top: -25%;
+    top: 0;
     left: 0px;
     width: 100%;
+    height: auto;
+    max-height: 0px;
     background: rgba(255, 255, 255, 0.6);
     text-align: right;
-    color: #000000; }
+    color: #000000;
+    z-index: 1000000;
+    overflow: hidden; }
     .video-prev .video-instruments a {
       text-decoration: none;
       color: #ffffff;
@@ -6055,7 +6060,9 @@ button.close {
         padding-right: 15px;
         border: 0px;
         border-radius: 0px;
-        box-shadow: none; }
+        box-shadow: none;
+        position: absolute;
+        right: 0px; }
         .video-prev .video-instruments .inner-video-instruments .dropdown-category li {
           padding: 3px; }
         .video-prev .video-instruments .inner-video-instruments .dropdown-category li a {
@@ -6065,6 +6072,11 @@ button.close {
           color: #ffffff; }
     .video-prev .video-instruments .buttons {
       text-align: left; }
+  .video-prev .video-img .inner-video-img {
+    overflow: hidden;
+    margin: 0px;
+    padding: 0px;
+    height: auto; }
   .video-prev .video-info {
     position: absolute;
     bottom: -50%;

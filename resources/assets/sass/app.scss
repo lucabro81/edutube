@@ -26,17 +26,26 @@ $category-chimica: #327CCB; // Blu
 }
 
 .video-prev {
-    overflow:hidden;
-    position: relative;
+    //position: relative;
+    width: 22%;
+    
+    .gutter-sizer {
+        width: 4%;
+    }
     
     .video-instruments {
         position: absolute;
-        top:-25%;
+        //top:-25%;
+        top:0;
         left:0px;
         width: 100%;
+        height: auto;
+        max-height: 0px;
         background: rgba(255, 255, 255, 0.6);
         text-align: right;
         color: #000000;
+        z-index: 1000000;
+        overflow:hidden;
         
         a { 
             text-decoration: none; 
@@ -114,6 +123,9 @@ $category-chimica: #327CCB; // Blu
                 border-radius: 0px;
                 box-shadow: none;
                 
+                position: absolute;
+                right: 0px;
+                
                 li {
                     padding: 3px;
                 }
@@ -126,6 +138,15 @@ $category-chimica: #327CCB; // Blu
         }
         .buttons { text-align: left; }
         
+    }
+    
+    .video-img {
+        .inner-video-img {
+            overflow:hidden;
+            margin: 0px;
+            padding: 0px;
+            height: auto;
+        }
     }
     
     .video-info {
