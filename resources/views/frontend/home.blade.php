@@ -24,34 +24,17 @@
    $rows = ceil($count_featured/$cols);
    
    ?>
-    <div class="js-isotope" 
-         id="main" 
-         data-isotope-options='{ "itemSelector": ".grid-item",  
-                "percentPosition": true,
-                "fitRows": {
-                    gutter: ".gutter-sizer",
-                }
-            }'>
-        @for($j = 1; $j<=$rows; $j++)
-            <div class="video-prev-row" id="video-prev-row-{{$j}}">
-                @for($i = 1; $i <= $cols; $i++)
-                    @include('frontend/video_preview', ['post' => $featured[$index], 'index' => $index])
-                    <?php $index += 1; ?>
+    <div style="width:100%; overflow: hidden;">
+        <div style="width:auto; margin: 0 -160px 0 -160px;">
+            <div class="js-isotope" id="main">
+                @for($j = 0; $j<$count_featured; $j++)
+                    @include('frontend/video_preview', ['post' => $featured[$j], 'index' => $j])
                 @endfor
             </div>
-        @endfor
+        </div>
     </div>
 
 @stop()
 
 @section("js_aggiuntivi")
-    <script>
-        $('#main').isotope({
-            // options...
-            /*itemSelector: '.video-prev-row',
-            masonry: {
-                columnWidth: 200
-            }*/
-        });
-    </script>
 @stop()

@@ -124,6 +124,7 @@
     {!!Html::script('angular/angular.js')!!}
     {!!Html::script('js/app.min.js')!!}
     {!!Html::script('js/isotope.pkgd.min.js')!!}
+    {!!Html::script('js/fit-columns.js')!!}
     @yield('js_aggiuntivi')
 </body>
 

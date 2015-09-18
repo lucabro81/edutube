@@ -4,6 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -5991,112 +5992,287 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
+/*********************/
+/***** VARIABILI *****/
+/*********************/
+/******************/
+/***** MIXINS *****/
+/******************/
+/***************/
+/***** CSS *****/
+/***************/
 #main {
-  color: #ffffff; }
+  font-family: 'Lato', sans-serif;
+  color: #ffffff;
+  margin: 0 auto; }
+
+.bg-storia {
+  background-color: #FBB829; }
+
+.bg-storia-light {
+  background-color: #fdd98d; }
+
+.bg-storia-dark {
+  background-color: #eda304; }
+
+.bd-storia {
+  border-color: #FBB829;
+  border-style: solid; }
+
+.bd-storia-light {
+  border-color: #fdd98d;
+  border-style: solid; }
+
+.bd-storia-dark {
+  border-color: #eda304;
+  border-style: solid; }
+
+.bg-scienza {
+  background-color: #543511; }
+
+.bg-scienza-light {
+  background-color: #a96b22; }
+
+.bg-scienza-dark {
+  background-color: #2a1a08; }
+
+.bd-scienza {
+  border-color: #543511;
+  border-style: solid; }
+
+.bd-scienza-light {
+  border-color: #a96b22;
+  border-style: solid; }
+
+.bd-scienza-dark {
+  border-color: #2a1a08;
+  border-style: solid; }
+
+.bg-tecnologia {
+  background-color: #F02311; }
+
+.bg-tecnologia-light {
+  background-color: #f67c71; }
+
+.bg-tecnologia-dark {
+  background-color: #c21b0c; }
+
+.bd-tecnologia {
+  border-color: #F02311;
+  border-style: solid; }
+
+.bd-tecnologia-light {
+  border-color: #f67c71;
+  border-style: solid; }
+
+.bd-tecnologia-dark {
+  border-color: #c21b0c;
+  border-style: solid; }
+
+.bg-storia-della-scienza {
+  background-color: #7FAF1B; }
+
+.bg-storia-della-scienza-light {
+  background-color: #b3e34d; }
+
+.bg-storia-della-scienza-dark {
+  background-color: #5f8314; }
+
+.bd-storia-della-scienza {
+  border-color: #7FAF1B;
+  border-style: solid; }
+
+.bd-storia-della-scienza-light {
+  border-color: #b3e34d;
+  border-style: solid; }
+
+.bd-storia-della-scienza-dark {
+  border-color: #5f8314;
+  border-style: solid; }
+
+.bg-fisica {
+  background-color: #FF9999; }
+
+.bg-fisica-light {
+  background-color: white; }
+
+.bg-fisica-dark {
+  background-color: #ff6666; }
+
+.bd-fisica {
+  border-color: #FF9999;
+  border-style: solid; }
+
+.bd-fisica-light {
+  border-color: white;
+  border-style: solid; }
+
+.bd-fisica-dark {
+  border-color: #ff6666;
+  border-style: solid; }
+
+.bg-chimica {
+  background-color: #327CCB; }
+
+.bg-chimica-light {
+  background-color: #83b0e0; }
+
+.bg-chimica-dark {
+  background-color: #2863a2; }
+
+.bd-chimica {
+  border-color: #327CCB;
+  border-style: solid; }
+
+.bd-chimica-light {
+  border-color: #83b0e0;
+  border-style: solid; }
+
+.bd-chimica-dark {
+  border-color: #2863a2;
+  border-style: solid; }
+
+.frame-prev {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0px;
+  border-width: 0px; }
 
 .video-prev {
-  width: 22%; }
-  .video-prev .gutter-sizer {
-    width: 4%; }
-  .video-prev .video-instruments {
-    position: absolute;
-    top: 0;
-    left: 0px;
-    width: 100%;
-    height: auto;
-    max-height: 0px;
-    background: rgba(255, 255, 255, 0.6);
-    text-align: right;
-    color: #000000;
-    z-index: 1000000;
-    overflow: hidden; }
-    .video-prev .video-instruments a {
-      text-decoration: none;
-      color: #ffffff;
-      border: 0px;
-      border-radius: 0; }
-    .video-prev .video-instruments .inner-video-instruments {
-      padding: 3px; }
-      .video-prev .video-instruments .inner-video-instruments a.video-options {
-        color: #000000; }
-      .video-prev .video-instruments .inner-video-instruments .storia {
-        background-color: #FBB829; }
-        .video-prev .video-instruments .inner-video-instruments .storia li a:hover {
-          background: #eda304; }
-      .video-prev .video-instruments .inner-video-instruments .scienza {
-        background-color: #543511; }
-        .video-prev .video-instruments .inner-video-instruments .scienza li a:hover {
-          background: #2a1a08; }
-      .video-prev .video-instruments .inner-video-instruments .tecnologia {
-        background-color: #F02311; }
-        .video-prev .video-instruments .inner-video-instruments .tecnologia li a:hover {
-          background: #c21b0c; }
-      .video-prev .video-instruments .inner-video-instruments .storia-della-scienza {
-        background-color: #7FAF1B; }
-        .video-prev .video-instruments .inner-video-instruments .storia-della-scienza li a:hover {
-          background: #5f8314; }
-      .video-prev .video-instruments .inner-video-instruments .fisica {
-        background-color: #FF9999; }
-        .video-prev .video-instruments .inner-video-instruments .fisica li a:hover {
-          background: #ff6666; }
-      .video-prev .video-instruments .inner-video-instruments .chimica {
-        background-color: #327CCB; }
-        .video-prev .video-instruments .inner-video-instruments .chimica li a:hover {
-          background: #2863a2; }
-      .video-prev .video-instruments .inner-video-instruments .dropdown-video-options {
-        margin-left: 15px;
-        margin-top: 6px;
-        border: 0px;
-        box-shadow: none;
-        border-radius: 0px;
-        color: #ffffff; }
-        .video-prev .video-instruments .inner-video-instruments .dropdown-video-options li a {
-          padding: 3px; }
-        .video-prev .video-instruments .inner-video-instruments .dropdown-video-options li a:hover {
-          color: #ffffff; }
-      .video-prev .video-instruments .inner-video-instruments .dropdown-category {
-        background: none;
-        text-align: right;
-        padding-right: 15px;
-        border: 0px;
-        border-radius: 0px;
-        box-shadow: none;
+  width: 320px;
+  height: 287px;
+  margin-bottom: 10px;
+  /*.video-instruments {
         position: absolute;
-        right: 0px; }
-        .video-prev .video-instruments .inner-video-instruments .dropdown-category li {
-          padding: 3px; }
-        .video-prev .video-instruments .inner-video-instruments .dropdown-category li a {
-          display: inline-block !important;
-          padding: 1px 5px; }
-        .video-prev .video-instruments .inner-video-instruments .dropdown-category li a:hover {
-          color: #ffffff; }
-    .video-prev .video-instruments .buttons {
-      text-align: left; }
+        top:0;
+        left:0px;
+        width: 100%;
+        height: auto;
+        max-height: 0px;
+        background: rgba(255, 255, 255, 0.6);
+        text-align: right;
+        color: #000000;
+        z-index: 1000000;
+        overflow:hidden;
+        
+        a { 
+            text-decoration: none; 
+            color: #ffffff;
+            border: 0px;
+            @include border-radius(0);
+            
+        }
+        
+        
+        
+        .inner-video-instruments { 
+            padding: 3px; 
+            
+            a.video-options {
+                color: #000000;
+            }
+            
+            
+            
+            
+            
+            .dropdown-video-options {
+                margin-left: 15px;
+                margin-top: 6px;
+                border: 0px;
+                box-shadow: none;
+                border-radius: 0px;
+                color: #ffffff;
+                li a {
+                    padding: 3px;
+                }
+                li a:hover { color: #ffffff }
+            }
+            
+            .dropdown-category {
+                background: none;
+                text-align: right;
+                padding-right: 15px;
+                
+                border: 0px;
+                border-radius: 0px;
+                box-shadow: none;
+                
+                position: absolute;
+                right: 0px;
+                
+                li {
+                    padding: 3px;
+                }
+                li a {
+                    display: inline-block !important;
+                    padding: 1px 5px;
+                }
+                li a:hover { color: #ffffff }
+            }
+        }
+        .buttons { text-align: left; }
+        
+    }*/ }
+  .video-prev .prev_cover {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 10;
+    top: 0px;
+    left: 0px; }
+  .video-prev .ombra_dx {
+    box-shadow: inset 50px 0 50px -20px rgba(0, 0, 0, 0.7);
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    right: -150px;
+    top: 0px; }
+  .video-prev .ombra_sx {
+    box-shadow: inset -50px 0 50px -20px rgba(0, 0, 0, 0.7);
+    position: absolute;
+    width: 150px;
+    height: 100%;
+    left: -150px;
+    top: 0px; }
   .video-prev .video-img .inner-video-img {
     overflow: hidden;
-    margin: 0px;
-    padding: 0px;
+    margin: auto;
+    padding: atuo;
     height: auto; }
   .video-prev .video-info {
     position: absolute;
-    bottom: -50%;
-    left: 0px;
-    height: 50%;
+    padding: 10px;
+    bottom: 0px;
     width: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    padding: 5px; }
+    z-index: 110; }
     .video-prev .video-info a {
       text-decoration: none;
       color: #ffffff; }
-    .video-prev .video-info p {
-      padding: 0px;
-      margin: 0px; }
     .video-prev .video-info .date {
-      font-size: 11px; }
+      font-size: 11px;
+      font-weight: 300; }
     .video-prev .video-info .title {
-      font-size: 16px; }
+      font-size: 20px;
+      font-weight: 400; }
     .video-prev .video-info .author {
       font-size: 11px;
-      padding-top: 3px; }
+      font-weight: 300; }
+  .video-prev p.title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap; }
+  .video-prev .video-instruments {
+    position: relative;
+    width: 100%;
+    padding: 4px;
+    z-index: 100; }
+    .video-prev .video-instruments a,
+    .video-prev .video-instruments a:hover {
+      text-decoration: none;
+      color: #ffffff; }
 
 /*# sourceMappingURL=app.css.map */
