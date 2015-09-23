@@ -4,7 +4,7 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
-@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,100);
 html {
   font-family: sans-serif;
   -ms-text-size-adjust: 100%;
@@ -6001,13 +6001,37 @@ button.close {
 /***************/
 /***** CSS *****/
 /***************/
+a,
+a:hover {
+  text-decoration: none;
+  color: #ffffff; }
+
+p {
+  color: #ffffff; }
+
+nav {
+  margin: 0px !important;
+  border: 0px !important;
+  background-color: #ffffff !important; }
+  nav a {
+    padding: 10px !important; }
+
 #main {
-  font-family: 'Lato', sans-serif;
+  font-family: 'Roboto', sans-serif;
   color: #ffffff;
   margin: 0 auto; }
 
 .bg-storia {
   background-color: #FBB829; }
+
+.bg-storia-70perc {
+  background-color: rgba(251, 184, 41, 0.7); }
+
+.bg-storia-50perc {
+  background-color: rgba(251, 184, 41, 0.5); }
+
+.bg-storia-20perc {
+  background-color: rgba(251, 184, 41, 0.2); }
 
 .bg-storia-light {
   background-color: #fdd98d; }
@@ -6030,6 +6054,15 @@ button.close {
 .bg-scienza {
   background-color: #543511; }
 
+.bg-scienza-70perc {
+  background-color: rgba(84, 53, 17, 0.7); }
+
+.bg-scienza-50perc {
+  background-color: rgba(84, 53, 17, 0.5); }
+
+.bg-scienza-20perc {
+  background-color: rgba(84, 53, 17, 0.2); }
+
 .bg-scienza-light {
   background-color: #a96b22; }
 
@@ -6050,6 +6083,15 @@ button.close {
 
 .bg-tecnologia {
   background-color: #F02311; }
+
+.bg-tecnologia-70perc {
+  background-color: rgba(240, 35, 17, 0.7); }
+
+.bg-tecnologia-50perc {
+  background-color: rgba(240, 35, 17, 0.5); }
+
+.bg-tecnologia-20perc {
+  background-color: rgba(240, 35, 17, 0.2); }
 
 .bg-tecnologia-light {
   background-color: #f67c71; }
@@ -6072,6 +6114,15 @@ button.close {
 .bg-storia-della-scienza {
   background-color: #7FAF1B; }
 
+.bg-storia-della-scienza-70perc {
+  background-color: rgba(127, 175, 27, 0.7); }
+
+.bg-storia-della-scienza-50perc {
+  background-color: rgba(127, 175, 27, 0.5); }
+
+.bg-storia-della-scienza-20perc {
+  background-color: rgba(127, 175, 27, 0.2); }
+
 .bg-storia-della-scienza-light {
   background-color: #b3e34d; }
 
@@ -6093,6 +6144,15 @@ button.close {
 .bg-fisica {
   background-color: #FF9999; }
 
+.bg-fisica-70perc {
+  background-color: rgba(255, 153, 153, 0.7); }
+
+.bg-fisica-50perc {
+  background-color: rgba(255, 153, 153, 0.5); }
+
+.bg-fisica-20perc {
+  background-color: rgba(255, 153, 153, 0.2); }
+
 .bg-fisica-light {
   background-color: white; }
 
@@ -6113,6 +6173,15 @@ button.close {
 
 .bg-chimica {
   background-color: #327CCB; }
+
+.bg-chimica-70perc {
+  background-color: rgba(50, 124, 203, 0.7); }
+
+.bg-chimica-50perc {
+  background-color: rgba(50, 124, 203, 0.5); }
+
+.bg-chimica-20perc {
+  background-color: rgba(50, 124, 203, 0.2); }
 
 .bg-chimica-light {
   background-color: #83b0e0; }
@@ -6138,89 +6207,24 @@ button.close {
   height: 100%;
   top: 0px;
   border-width: 0px; }
+  .frame-prev .cover-prev-img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: none;
+    padding: 45px 20px;
+    font-size: 50px; }
 
 .video-prev {
   width: 320px;
-  height: 287px;
-  margin-bottom: 10px;
-  /*.video-instruments {
-        position: absolute;
-        top:0;
-        left:0px;
-        width: 100%;
-        height: auto;
-        max-height: 0px;
-        background: rgba(255, 255, 255, 0.6);
-        text-align: right;
-        color: #000000;
-        z-index: 1000000;
-        overflow:hidden;
-        
-        a { 
-            text-decoration: none; 
-            color: #ffffff;
-            border: 0px;
-            @include border-radius(0);
-            
-        }
-        
-        
-        
-        .inner-video-instruments { 
-            padding: 3px; 
-            
-            a.video-options {
-                color: #000000;
-            }
-            
-            
-            
-            
-            
-            .dropdown-video-options {
-                margin-left: 15px;
-                margin-top: 6px;
-                border: 0px;
-                box-shadow: none;
-                border-radius: 0px;
-                color: #ffffff;
-                li a {
-                    padding: 3px;
-                }
-                li a:hover { color: #ffffff }
-            }
-            
-            .dropdown-category {
-                background: none;
-                text-align: right;
-                padding-right: 15px;
-                
-                border: 0px;
-                border-radius: 0px;
-                box-shadow: none;
-                
-                position: absolute;
-                right: 0px;
-                
-                li {
-                    padding: 3px;
-                }
-                li a {
-                    display: inline-block !important;
-                    padding: 1px 5px;
-                }
-                li a:hover { color: #ffffff }
-            }
-        }
-        .buttons { text-align: left; }
-        
-    }*/ }
+  height: auto;
+  margin-bottom: 10px; }
   .video-prev .prev_cover {
     position: absolute;
     width: 100%;
     height: 100%;
     background: black;
-    z-index: 10;
+    z-index: 120;
     top: 0px;
     left: 0px; }
   .video-prev .ombra_dx {
@@ -6243,7 +6247,7 @@ button.close {
     padding: atuo;
     height: auto; }
   .video-prev .video-info {
-    position: absolute;
+    position: relative;
     padding: 10px;
     bottom: 0px;
     width: 100%;
@@ -6252,14 +6256,14 @@ button.close {
       text-decoration: none;
       color: #ffffff; }
     .video-prev .video-info .date {
-      font-size: 11px;
-      font-weight: 300; }
+      font-size: 12px;
+      font-weight: 100; }
     .video-prev .video-info .title {
-      font-size: 20px;
-      font-weight: 400; }
-    .video-prev .video-info .author {
-      font-size: 11px;
+      font-size: 22px;
       font-weight: 300; }
+    .video-prev .video-info .author {
+      font-size: 12px;
+      font-weight: 100; }
   .video-prev p.title {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -6269,10 +6273,165 @@ button.close {
     position: relative;
     width: 100%;
     padding: 4px;
-    z-index: 100; }
-    .video-prev .video-instruments a,
-    .video-prev .video-instruments a:hover {
-      text-decoration: none;
-      color: #ffffff; }
+    z-index: 100;
+    height: 26px;
+    margin-bottom: -26px; }
+
+.modal-info-video {
+  position: fixed;
+  display: none;
+  padding-left: 0px;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  z-index: 10000000000;
+  padding: 30px;
+  overflow-y: scroll; }
+  .modal-info-video a,
+  .modal-info-video a:hover {
+    color: #000000; }
+  .modal-info-video .modal-dialog-info-video {
+    position: relative;
+    margin: 0 auto;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 0 100px 30px rgba(0, 0, 0, 0.5); }
+    .modal-info-video .modal-dialog-info-video .modal-content-info-video {
+      position: relative; }
+      .modal-info-video .modal-dialog-info-video .modal-content-info-video .header {
+        width: 100%;
+        padding: 4px; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .header a,
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .header a:hover {
+          color: #ffffff !important; }
+      .modal-info-video .modal-dialog-info-video .modal-content-info-video .body {
+        width: 100%; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video {
+          position: relative;
+          width: 100%;
+          height: 350px;
+          overflow: hidden; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video img {
+            display: block;
+            margin: 0 auto; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .sfondo-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 100;
+            top: 0px;
+            left: 0px;
+            background: url(../img/gridtile.png); }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal {
+            position: absolute;
+            width: 100%;
+            margin: 0px;
+            z-index: 101;
+            bottom: 0px;
+            left: 0px;
+            padding: 10px;
+            margin: 0px;
+            font-size: 30px;
+            font-weight: 100; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal a,
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal a:hover {
+              color: #ffffff !important; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal p {
+              margin-bottom: 0px; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal .date {
+              font-size: 16px;
+              font-weight: 300; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal .title {
+              font-size: 30px;
+              font-weight: 100; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-video .video-info-modal .author {
+              font-size: 16px;
+              font-weight: 300; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-if-auth {
+          display: table-cell; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-if-auth .if {
+            font-size: 37px;
+            font-weight: 100;
+            vertical-align: middle;
+            padding: 0 12px; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-if-auth button {
+            padding: 5px;
+            margin: 0px;
+            border-radius: 0;
+            box-shadow: inset 0 0 0 0 transparent;
+            background: red;
+            color: #ffffff;
+            border: 0px; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .img-if-auth a {
+            padding-left: 12px; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .visioni-punteggio {
+          display: table-cell;
+          padding: 12px 27px;
+          font-weight: 100; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .visioni-punteggio span {
+            font-size: 20px;
+            vertical-align: middle; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .visioni-punteggio .glyphicon-triangle-bottom {
+            color: red;
+            padding-right: 12px; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .visioni-punteggio .glyphicon-triangle-top {
+            color: green;
+            padding-left: 12px; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .categorie {
+          padding: 12px 12px 0 12px; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .categorie .titolo-categorie {
+            display: table-cell;
+            color: #9b9b9b; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .categorie .titolo-categorie span {
+              vertical-align: middle; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .categorie .lista-categorie button {
+            border: 0px;
+            border-radius: 0;
+            box-shadow: inset 0 0 0 0 transparent;
+            margin-right: 5px;
+            padding: 3px;
+            color: #ffffff;
+            line-height: 1em; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .testo-descrizione {
+          padding: 12px 5px 0 12px; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .testo-descrizione .titolo-descrizione {
+            color: #9b9b9b; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .tags {
+          padding: 12px 5px 12px 12px; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .tags .titolo-tags {
+            color: #9b9b9b; }
+          .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .tags a {
+            display: inline-block;
+            padding: 3px;
+            margin-left: 5px;
+            background-color: #98EFFC;
+            color: #006;
+            text-decoration: underline;
+            font-size: 12px;
+            font-weight: 300; }
+            .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .description .tags a:hover {
+              text-decoration: none; }
+        .modal-info-video .modal-dialog-info-video .modal-content-info-video .body .comments {
+          padding: 12px; }
+      .modal-info-video .modal-dialog-info-video .modal-content-info-video .footer {
+        position: relative;
+        width: 100%; }
+
+#items {
+  margin: 0 auto;
+  padding: 8px;
+  border: 1px solid #ddd; }
+
+section {
+  margin: 0 auto;
+  padding: 8px 0 0 8px;
+  border: 1px solid #ddd; }
+
+section article {
+  margin: 0 8px 8px 0;
+  padding: 4px;
+  border: 1px solid #ddd; }
 
 /*# sourceMappingURL=app.css.map */

@@ -1,31 +1,50 @@
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300);
+//@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,100);
 
 /*********************/
 /***** VARIABILI *****/
 /*********************/
 
 $category-storia                      : #FBB829;                        // Giallo
+$category-storia-70per                : rgba($category-storia, 0.7);    // Giallo alpha 70%
+$category-storia-50per                : rgba($category-storia, 0.5);    // Giallo alpha 50%
+$category-storia-20per                : rgba($category-storia, 0.2);    // Giallo alpha 20%
 $category-storia-darken               : darken($category-storia, 10%);  // Giallo scuro
 $category-storia-lighten              : lighten($category-storia, 20%); // Giallo chiaro
 
 $category-scienza                     : #543511;                         // Marrone
+$category-scienza-70per               : rgba($category-scienza, 0.7);    // Marrone alpha 70%
+$category-scienza-50per               : rgba($category-scienza, 0.5);    // Marrone alpha 50%
+$category-scienza-20per               : rgba($category-scienza, 0.2);    // Marrone alpha 20%
 $category-scienza-darken              : darken($category-scienza, 10%);  // Marrone scuro
 $category-scienza-lighten             : lighten($category-scienza, 20%); // Marrone chiaro
 
 $category-tecnologia                  : #F02311;                            // Rosso 
+$category-tecnologia-70per            : rgba($category-tecnologia, 0.7);    // Rosso alpha 70%
+$category-tecnologia-50per            : rgba($category-tecnologia, 0.5);    // Rosso alpha 50%
+$category-tecnologia-20per            : rgba($category-tecnologia, 0.2);    // Rosso alpha 20%
 $category-tecnologia-darken           : darken($category-tecnologia, 10%);  // Rosso scuro 
 $category-tecnologia-lighten          : lighten($category-tecnologia, 20%); // Rosso chiaro 
 
 $category-storia-della-scienza        : #7FAF1B;                                        // Verde
+$category-storia-della-scienza-70per  : rgba($category-storia-della-scienza, 0.7);      // Verde alpha 70%
+$category-storia-della-scienza-50per  : rgba($category-storia-della-scienza, 0.5);      // Verde alpha 50%
+$category-storia-della-scienza-20per  : rgba($category-storia-della-scienza, 0.2);      // Verde alpha 20%
 $category-storia-della-scienza-darken : darken($category-storia-della-scienza, 10%);    // Verde scuro
 $category-storia-della-scienza-lighten: lighten($category-storia-della-scienza, 20%);   // Verde chiaro
 
 $category-fisica                      : #FF9999;                        // Rosa
+$category-fisica-70per                : rgba($category-fisica, 0.7);    // Rosa alpha 70%
+$category-fisica-50per                : rgba($category-fisica, 0.5);    // Rosa alpha 50%
+$category-fisica-20per                : rgba($category-fisica, 0.2);    // Rosa alpha 20%
 $category-fisica-darken               : darken($category-fisica, 10%);  // Rosa scuro
 $category-fisica-lighten              : lighten($category-fisica, 20%); // Rosa chiaro
 
 $category-chimica                     : #327CCB;                         // Blu
+$category-chimica-70per               : rgba($category-chimica, 0.7);    // Blu alpha 70%
+$category-chimica-50per               : rgba($category-chimica, 0.5);    // Blu alpha 50%
+$category-chimica-20per               : rgba($category-chimica, 0.2);    // Blu alpha 20%
 $category-chimica-darken              : darken($category-chimica, 10%);  // Blu scuro
 $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu chiaro
 
@@ -56,16 +75,39 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 /***** CSS *****/
 /***************/
 
-#main {
-    font-family: 'Lato', sans-serif;
+a,
+a:hover { 
+    text-decoration: none; 
     color: #ffffff;
-    //height: 80%;
-    //height: 480px;
+}
+
+p {
+    color: #ffffff;
+}
+
+nav {
+    margin: 0px!important;
+    border: 0px!important;
+    background-color: #ffffff!important;
+    
+    a {
+        padding:10px!important;
+    }
+}
+
+#main {
+    //font-family: 'Lato', sans-serif;
+    font-family: 'Roboto', sans-serif;
+    color: #ffffff;
     margin: 0 auto;
 }
 
-// Categorie *-* INIZIO *-*
+// Categorie /* INIZIO */
+
 .bg-storia { background-color: $category-storia; }
+.bg-storia-70perc { background-color: $category-storia-70per; }
+.bg-storia-50perc { background-color: $category-storia-50per; }
+.bg-storia-20perc { background-color: $category-storia-20per; }
 .bg-storia-light { background-color: $category-storia-lighten }
 .bg-storia-dark { background-color: $category-storia-darken }
 
@@ -74,6 +116,9 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 .bd-storia-dark { border-color: $category-storia-darken; border-style: solid; }
 
 .bg-scienza { background-color: $category-scienza; }
+.bg-scienza-70perc { background-color: $category-scienza-70per; }
+.bg-scienza-50perc { background-color: $category-scienza-50per; }
+.bg-scienza-20perc { background-color: $category-scienza-20per; }
 .bg-scienza-light { background-color: $category-scienza-lighten; }
 .bg-scienza-dark { background-color: $category-scienza-darken; }
 
@@ -82,6 +127,9 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 .bd-scienza-dark { border-color: $category-scienza-darken; border-style: solid; }
 
 .bg-tecnologia { background-color: $category-tecnologia; }
+.bg-tecnologia-70perc { background-color: $category-tecnologia-70per; }
+.bg-tecnologia-50perc { background-color: $category-tecnologia-50per; }
+.bg-tecnologia-20perc { background-color: $category-tecnologia-20per; }
 .bg-tecnologia-light { background-color: $category-tecnologia-lighten; }
 .bg-tecnologia-dark { background-color: $category-tecnologia-darken; }
 
@@ -90,6 +138,9 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 .bd-tecnologia-dark { border-color: $category-tecnologia-darken; border-style: solid; }
 
 .bg-storia-della-scienza { background-color: $category-storia-della-scienza; }
+.bg-storia-della-scienza-70perc { background-color: $category-storia-della-scienza-70per; }
+.bg-storia-della-scienza-50perc { background-color: $category-storia-della-scienza-50per; }
+.bg-storia-della-scienza-20perc { background-color: $category-storia-della-scienza-20per; }
 .bg-storia-della-scienza-light { background-color: $category-storia-della-scienza-lighten; }
 .bg-storia-della-scienza-dark { background-color: $category-storia-della-scienza-darken; }
 
@@ -98,6 +149,9 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 .bd-storia-della-scienza-dark { border-color: $category-storia-della-scienza-darken; border-style: solid; }
 
 .bg-fisica { background-color: $category-fisica; }
+.bg-fisica-70perc { background-color: $category-fisica-70per; }
+.bg-fisica-50perc { background-color: $category-fisica-50per; }
+.bg-fisica-20perc { background-color: $category-fisica-20per; }
 .bg-fisica-light { background-color: $category-fisica-lighten; }
 .bg-fisica-dark { background-color: $category-fisica-darken; }
 
@@ -106,6 +160,9 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 .bd-fisica-dark { border-color: $category-fisica-darken; border-style: solid; }
 
 .bg-chimica { background-color: $category-chimica; }
+.bg-chimica-70perc { background-color: $category-chimica-70per; }
+.bg-chimica-50perc { background-color: $category-chimica-50per; }
+.bg-chimica-20perc { background-color: $category-chimica-20per; }
 .bg-chimica-light { background-color: $category-chimica-lighten; }
 .bg-chimica-dark { background-color: $category-chimica-darken; }
 
@@ -113,7 +170,7 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
 .bd-chimica-light { border-color: $category-chimica-lighten; border-style: solid; }
 .bd-chimica-dark { border-color: $category-chimica-darken; border-style: solid; }
 
-// Categorie *-* FINE *-*
+// Categorie /* FINE */
 
 .frame-prev {
     position: absolute; 
@@ -121,16 +178,21 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
     height: 100%; 
     top:0px;
     border-width: 0px;
+    
+    .cover-prev-img {
+        position:absolute; 
+        width: 100%; 
+        height: 100%;
+        display: none;
+        padding: 45px 20px;
+        font-size: 50px;
+    }
 }
 
 .video-prev {
-    //position: relative;
-    //width: 22%;
-    
     width: 320px;
-    height: 287px;
-    //overflow:hidden;
-    //margin:10px;
+    //height: 287px;
+    height: auto;
     margin-bottom:10px;
     
     .prev_cover {
@@ -138,7 +200,7 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
         width:100%; 
         height:100%; 
         background:black; 
-        z-index:10; 
+        z-index:120; 
         top:0px; 
         left:0px
     }
@@ -161,79 +223,6 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
         top:0px
     }
     
-    /*.video-instruments {
-        position: absolute;
-        top:0;
-        left:0px;
-        width: 100%;
-        height: auto;
-        max-height: 0px;
-        background: rgba(255, 255, 255, 0.6);
-        text-align: right;
-        color: #000000;
-        z-index: 1000000;
-        overflow:hidden;
-        
-        a { 
-            text-decoration: none; 
-            color: #ffffff;
-            border: 0px;
-            @include border-radius(0);
-            
-        }
-        
-        
-        
-        .inner-video-instruments { 
-            padding: 3px; 
-            
-            a.video-options {
-                color: #000000;
-            }
-            
-            
-            
-            
-            
-            .dropdown-video-options {
-                margin-left: 15px;
-                margin-top: 6px;
-                border: 0px;
-                box-shadow: none;
-                border-radius: 0px;
-                color: #ffffff;
-                li a {
-                    padding: 3px;
-                }
-                li a:hover { color: #ffffff }
-            }
-            
-            .dropdown-category {
-                background: none;
-                text-align: right;
-                padding-right: 15px;
-                
-                border: 0px;
-                border-radius: 0px;
-                box-shadow: none;
-                
-                position: absolute;
-                right: 0px;
-                
-                li {
-                    padding: 3px;
-                }
-                li a {
-                    display: inline-block !important;
-                    padding: 1px 5px;
-                }
-                li a:hover { color: #ffffff }
-            }
-        }
-        .buttons { text-align: left; }
-        
-    }*/
-    
     .video-img {
         .inner-video-img {
             overflow:hidden;
@@ -244,24 +233,17 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
     }
     
     .video-info {
-        //bottom:-50%; 
-        //left: 0px; 
-        //height: 50%; 
-        //width:100%; 
-        //background: rgba(0, 0, 0, 0.6);
-        //padding: 5px;
-        position: absolute;
+        position: relative;
         padding: 10px;
         bottom: 0px;
         width: 100%;
         z-index: 110;
         
         a { text-decoration: none; color: #ffffff}
-        //p { padding: 0px; margin: 0px; }
         
-        .date { font-size: 11px; font-weight: 300; }
-        .title { font-size: 20px; font-weight: 400; }
-        .author { font-size: 11px;  font-weight: 300;}
+        .date { font-size: 12px; font-weight: 100; }
+        .title { font-size: 22px; font-weight: 300; }
+        .author { font-size: 12px;  font-weight: 100;}
     }
     
     p.title {
@@ -273,12 +255,240 @@ $category-chimica-lighten             : lighten($category-chimica, 20%); // Blu 
         width: 100%;
         padding: 4px;
         z-index: 100; 
+        height:26px;
+        margin-bottom: -26px;
+    }
+}
+
+// Modal video info /* INIZIO */
+
+.modal-info-video {
+    position: fixed;
+    display: none;
+    padding-left: 0px;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    z-index: 10000000000;
+    padding: 30px;
+    overflow-y: scroll;
+    
+    a,
+    a:hover {
+        color: #000000;
+    }
+    
+    .modal-dialog-info-video {
+        position: relative;
+        margin: 0 auto;
+        background: #ffffff;
+        overflow: hidden;
+        -webkit-box-shadow: 0 0 100px 30px rgba(0,0,0,0.5);
+        box-shadow: 0 0 100px 30px rgba(0,0,0,0.5);
         
-        a,
-        a:hover { 
-            text-decoration: none; 
-            color: #ffffff;
+        .modal-content-info-video {
+            position: relative;
             
+            .header {
+                width: 100%;
+                padding: 4px;
+                
+                a,
+                a:hover {
+                    color: #ffffff !important;
+                }
+            }
+            
+            .body {
+                width: 100%;
+                
+                .img-video {
+                    position: relative;
+                    width: 100%;
+                    height: 350px; 
+                    overflow: hidden;
+                    
+                    img {
+                        display: block; 
+                        margin: 0 auto;
+                    }
+                    
+                    .sfondo-grid {
+                        position:absolute; 
+                        width:100%; 
+                        height:100%; 
+                        z-index:100; 
+                        top: 0px; 
+                        left: 0px; 
+                        background: url(../img/gridtile.png);
+                    }
+                    
+                    .video-info-modal {
+                        position: absolute;  
+                        width: 100%; 
+                        margin: 0px;
+                        z-index: 101;
+                        bottom: 0px;
+                        left: 0px;
+                        padding: 10px;
+                        margin: 0px;
+                        font-size: 30px; 
+                        font-weight: 100;
+                        
+                        a,
+                        a:hover {
+                            color: #ffffff !important;
+                        }
+                        
+                        p{
+                            margin-bottom: 0px;
+                        }
+                        
+                        .date {
+                            font-size: 16px; font-weight: 300;
+                        }
+                        
+                        .title {
+                            font-size: 30px; font-weight: 100;
+                        }
+                        
+                        .author {
+                            font-size: 16px; font-weight: 300;
+                        }
+                    }
+                }
+                    
+                .img-if-auth {
+                    display:table-cell;
+                    
+                    .if {
+                        font-size: 37px;
+                        font-weight: 100;
+                        vertical-align: middle;
+                        padding:0 12px;
+                    }
+                    
+                    button {
+                        padding: 5px;
+                        margin: 0px;
+                        @include border-radius(0);
+                        @include box-shadow(inset, 0, 0, 0, 0, rgba(0,0,0,0));
+                        background: red;
+                        color: #ffffff;
+                        border: 0px;
+                    }
+                    
+                    a {
+                        padding-left: 12px;
+                    }
+                }
+                
+                .visioni-punteggio {
+                    display:table-cell;
+                    padding: 12px 27px;
+                    font-weight: 100;
+                    
+                    span {
+                        font-size: 20px;
+                        vertical-align: middle;
+                    }
+                    .glyphicon-triangle-bottom {
+                        color: red;
+                        padding-right: 12px;
+                    }
+                    .glyphicon-triangle-top {
+                        color: green;
+                        padding-left: 12px;                    
+                    }
+                }
+                
+                .description {
+                    
+                    .categorie {
+                        padding: 12px 12px 0 12px;
+                        
+                        .titolo-categorie {
+                            display: table-cell;
+                            color: #9b9b9b;
+
+                            span {
+                                vertical-align: middle;
+                            }
+                        }
+
+                        .lista-categorie {
+                            button {
+                                border: 0px;
+                                @include border-radius(0);
+                                @include box-shadow(inset, 0,0,0,0, rgba(0,0,0,0));
+                                margin-right: 5px;
+                                padding:3px;
+                                color: #ffffff;
+                                line-height: 1em;
+                            }
+                        }
+                    }
+                    
+                    
+                    
+                    
+                    .testo-descrizione {
+                        padding: 12px 5px 0 12px;
+                        
+                        .titolo-descrizione {
+                            color: #9b9b9b;
+                        }
+                        
+                    }
+                    
+                    .tags {
+                        padding: 12px 5px 12px 12px;
+                        
+                        .titolo-tags {
+                            color: #9b9b9b;
+                        }
+                        
+                        a {
+                            display: inline-block;
+                            padding:3px;
+                            margin-left: 5px;
+                            background-color: #98EFFC;
+                            color: #006;
+                            text-decoration: underline;
+                            font-size: 12px;
+                            font-weight: 300;
+                            
+                            &:hover {
+                                text-decoration: none;
+                            }
+                        }
+                    }
+                }
+                
+                .comments {
+                    padding: 12px;
+                }
+            }
+            
+            .footer {
+                position: relative;
+                width: 100%;
+            }
         }
     }
 }
+
+// Modal video info /* FINE */
+
+
+#items {
+    margin: 0 auto; padding: 8px; 
+    border: 1px solid #ddd; }
+section {
+    margin: 0 auto; padding: 8px 0 0 8px; 
+    border: 1px solid #ddd; }
+section article { 
+    margin: 0 8px 8px 0; padding: 4px; 
+    border: 1px solid #ddd; }

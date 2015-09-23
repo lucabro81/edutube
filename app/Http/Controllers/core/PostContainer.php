@@ -36,7 +36,11 @@ class PostContainer extends RecordContainer {
                 
         // selezione di un unico post
         if (isset($args['id'])) {
-            return Post::where('id',$args['id'])->with('author')->first();
+            return Post::where('id',$args['id'])
+                        ->with('author')
+                        ->with('mediafiles')
+                        ->with('categories')
+                    ->first();
         }
         
         //selezione di tutti i posts
@@ -100,7 +104,8 @@ class PostContainer extends RecordContainer {
             ->where('page',false)
             ->with('author')
             ->with('mediafiles')
-            ->with('categories');
+            ->with('categories')
+            ->with('tags');
         
         if ($limit>-1) {
             $posts->take($limit);

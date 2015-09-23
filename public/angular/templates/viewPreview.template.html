@@ -1,0 +1,31 @@
+<div class="video-prev" ng-repeat="item in items" ng-hover>
+    
+    <img ng-src="{{ item.mediafiles | imgByName: 'thubnail_medium' }}"> 
+    
+    <div class = "video-instruments bg-{{ item.categories[0].slug }}-dark">
+        <a href="#"><i class="glyphicon glyphicon-cog"></i></a>&nbsp;&nbsp;
+        <a href="#"><i class="glyphicon glyphicon-play-circle"></i></a>&nbsp;&nbsp;
+        <a href="#"><i class="glyphicon glyphicon-flag"></i></a>
+    </div>
+
+    <div class="frame-prev bd-{{ item.categories[0].slug }}-dark" align="center">
+        <div class="cover-prev-img bg-{{ item.categories[0].slug }}-50perc">
+            <a href="#" 
+               class="modal-info" 
+               data-slug="" 
+               data-video=""
+               ng-click="modalInfoShow(item, '.modal-info-video')"><i class="glyphicon glyphicon-info-sign"></i></a>&nbsp;&nbsp;
+            <a href="#" 
+               class="modal-play" 
+               data-slug="" 
+               data-video=""><i class="glyphicon glyphicon-play"></i></a>
+        </div>
+    </div>
+
+    <div class = "video-info bg-{{ item.categories[0].slug }}">
+        <p class = "date">{{ item.created_at | dateToISO | date:'dd/MM/yyyy' }}</p>
+        <p class = "title"><a href = "#" title="">{{ item.title }}</a></p>
+        <p class = "author"><a href = "#">Autore</a> - <a href = "">Loader</a></p>
+    </div>
+    
+</div>

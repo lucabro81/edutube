@@ -1,7 +1,9 @@
 
 var items = {
-    'videoPrev'      : null,
-    'this_video_prev': null
+    videoPrev       : null,
+    this_video_prev : null,
+    framePrev       : null,
+    modalInfo       : null
 }
 
 var utils = {
@@ -28,8 +30,10 @@ var html = {
  * @returns {resizeImage.css|Object}
  */
 function resizeImage(width_img, height_img, container) {
-
+    
     var new_h_img_width_cont = (height_img/width_img)*container.width();
+    //console.log(new_h_img_width_cont + " = " + "(" + height_img + "/" + width_img + ")*" + container.width());
+    
     var css = new Object();
 
     if (new_h_img_width_cont <= container.height()) {
@@ -113,7 +117,7 @@ function hide_incomplete_prev(this_video_prev, ombra, left_mod, cover) {
 
 // LISTENERS
 
-$(window).on('load', function(event){
+/*$(window).on('load', function(event){
 
     utils.width_window = $(window).width();
     utils.height_window = $(window).height();
@@ -126,13 +130,16 @@ $(window).on('load', function(event){
         }
     });
 
-});
+});*/
 
 $(document).ready(function(){
-    items.videoPrev = $('.video-prev');
+    /*items.videoPrev = $('.video-prev');
+    items.framePrev = $('.frame-prev');
+    items.modalInfo = $('.modal-info');
 
     items.videoPrev.hover(
         function() {
+            
             utils.left_dist       = $(this).offset().left;
             utils.right_dist      = $(window).width() - ($(this).offset().left + $(this).width());
             items.this_video_prev = this;
@@ -157,14 +164,6 @@ $(document).ready(function(){
                 
                 show_incomplete_prev(items.this_video_prev, ombra, left_mod, cover);    
             }
-            
-            $(items.this_video_prev).find('.frame-prev').stop(true).animate({
-                'border-width' : '4px'
-            },100);
-            
-            $(items.this_video_prev).find('.video-instruments').stop(true).animate({
-                'top' : -$(items.this_video_prev).find('.video-instruments').innerHeight() + 'px'
-            },100);
         },
         function() {
             
@@ -185,13 +184,88 @@ $(document).ready(function(){
                 hide_incomplete_prev(items.this_video_prev, ombra, left_mod, cover);
             }
             
-            $(items.this_video_prev).find('.frame-prev').stop(true).animate({
+            
+        }
+    );*/
+    
+    /*items.videoPrev.hover(
+        function() {
+            
+            $(this).find('.frame-prev').stop(true).animate({
+                'border-width' : '4px'
+            },100);
+            
+            $(this).find('.video-instruments').stop(true).animate({
+                'top' : -$(this).find('.video-instruments').innerHeight() + 'px'
+            },100);
+            
+            $(this).find('.cover-prev-img').fadeTo(100, 1);
+            
+        },
+        function() {
+            $(this).find('.frame-prev').stop(true).animate({
                 'border-width' : '0px'
             },100);
             
-            $(items.this_video_prev).find('.video-instruments').stop(true).animate({
+            $(this).find('.video-instruments').stop(true).animate({
                 'top' : '0px'
             },100);
+            
+            $(this).find('.cover-prev-img').fadeTo(100, 0);
         }
-    );
+    );*/
+    
+    /*$(document).on('click', '.modal-info, .close-modal-info-video', function() {
+        var modal = $('.modal-info-video');
+        var videoId = $(this).data('video');
+        var videoSlug = $(this).data('slug');
+        var modalOpen = modal.data('open');
+        
+        if (modalOpen === true) {
+            
+            // chiude modal
+            
+            modal.fadeTo(200, 0, function() {
+                modal.data('open', false);
+                modal.css({'z-index': -1000});
+            });
+        }
+        else {
+            
+            // apre modal
+            
+            // INIT MODAL
+            modal.css({'z-index': 1000});
+            modal.find('img').attr('src', '');
+            
+            $.ajax({
+                dataType: 'json',
+                type: 'GET',
+                url: baseUrl() + 'post/' + videoId + '/' + videoSlug,
+                success: function(response) {
+                    var title            = response.title;
+                    var mediafiles       = response.mediafiles;
+                    var biggerMediafiles = null;
+                    var categories       = response.categories;
+                    var description      = response.mediafiles;
+                    
+                    // si cerca l'ultimo file che dovrebbe essere il più grande possible
+                    // TODO: da verificare
+                    $.each(mediafiles, function(index, obj) {
+                        biggerMediafiles = obj;
+                    });
+                    
+                    modal.find('img').attr('src', biggerMediafiles.url);
+                    modal.find('img').css(resizeImage(biggerMediafiles.width, biggerMediafiles.height, modal.find('.img-video')));
+                    modal.find('.img-video').find('p').text(title);
+                },
+                error: function(xhr, status, error){
+                    errorResponse(xhr, status, error);
+                }
+            });
+            
+            modal.data('open', true);
+            modal.fadeTo(200, 1);
+        }
+    });*/
 });

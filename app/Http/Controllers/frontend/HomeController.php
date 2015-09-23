@@ -28,6 +28,10 @@ class HomeController extends ParentController {
     }
     
     public function index() {
+        return view('frontend/home');
+    }
+    
+    public function posts_api() {
         
         $post_obj = new PostContainer();
         
@@ -38,7 +42,24 @@ class HomeController extends ParentController {
             
         }
         
-        return view('frontend/home')->with('posts', $posts);
+        //return view('frontend/home')->with('posts', $posts);
+        //return $posts;
+        
+        return $posts;
+    }
+    
+    public function get_post($id, $slug) {
+        $post_obj = new PostContainer();
+        $post = NULL;
+        
+        try {
+            $post = $post_obj->read(['id' => $id]);
+        } 
+        catch (Exception $ex) {
+            
+        }
+        
+        return $post;
     }
     
     public function storeauthcode(Request $request) {

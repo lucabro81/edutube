@@ -12,26 +12,24 @@
     
    <?php
    
-   $featured = $posts['featured'];
+   /*$featured = $posts['featured'];
    $count_featured = count($featured);
   
-   
    $cols = 6;
    $rows = 0;
    
    $index = 0;
    
-   $rows = ceil($count_featured/$cols);
+   $rows = ceil($count_featured/$cols);*/
    
    ?>
-    <div style="width:100%; overflow: hidden;">
+    <div style="width:100%; overflow: hidden;" ng-controller="ItemsCtrl">
         <div style="width:auto; margin: 0 -160px 0 -160px;">
-            <div class="js-isotope" id="main">
-                @for($j = 0; $j<$count_featured; $j++)
-                    @include('frontend/video_preview', ['post' => $featured[$j], 'index' => $j])
-                @endfor
+            <div class="js-isotope" id="main" data-iso-repeat="collection">
+                @include('frontend/video_info')
             </div>
         </div>
+        @include('frontend/video_info')
     </div>
 
 @stop()
