@@ -9,6 +9,13 @@
         <div class="pull-right" style="position: relative;">
             <button class="btn simple-button"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
         </div>
+        
+        <div class="pull-left" >
+            <button class="btn simple-button" 
+                    data-toggle="modal" 
+                    data-target="#myModal"
+                    ng-click="returnModal(item, '.modal-info-video', '#floating_player')"><i class="glyphicon glyphicon-resize-full"></i></button>
+        </div>
     </div>
     
     <div class="img-prev-container" style="position: relative;">
@@ -48,7 +55,7 @@
                 </div>
                 
                 <div class="pull-left" >
-                    <button class="btn simple-button"><i class="glyphicon glyphicon-pushpin" ng-click="pushpin('#floating_player')"></i></button>
+                    <button class="btn simple-button"><i class="glyphicon glyphicon-resize-small" ng-click="pushpin('#floating_player')"></i></button>
                 </div>
                 
                 <div class="pull-right" style="position: relative;">

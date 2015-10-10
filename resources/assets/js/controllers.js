@@ -206,6 +206,62 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
         $('div#video-cont-floating').remove();
         $(floating_sel).fadeTo(200, 0);
     };
+    
+    $scope.returnModal = function(item, modal_sel, floating_sel) {
+        $scope.pushpinHide(floating_sel);
+        
+        var modal = $(modal_sel);
+
+        $('.modal-dialog').css({
+            //'margin': '0 auto',
+            'width': '100%',
+            'height': '100%',
+        });
+        $('.draggable-box').attr('style', '');
+
+        $('.modal-dialog').draggable({
+            containment: "parent",
+            snap: "#myModal",
+            stop: function(event, ui) {
+            }
+        });
+        
+        // TODO: ora che c'è la direttiva funcionante tutta questa parte può essere sbrigata dal template
+        //var title            = item.title;
+        var mediafiles       = item.mediafiles;
+        var img_header       = modal.find('#img-prev-video');
+
+        // si cerca l'ultimo file che dovrebbe essere il più grande possible
+        // TODO: da verificare
+        $.each(mediafiles, function(i, obj) {
+            utils.biggerMediafiles = obj;
+        });
+
+
+
+        img_header.attr('src', utils.biggerMediafiles.url);
+        img_header.one('load', function () {
+
+            var height = (modal.find('.img-video').width()/16)*9;
+            var total_height = height + $('.video-info-modal ').outerHeight() + $('.dati-video').outerHeight() + $('.header').outerHeight() + 60;
+
+            if (total_height > $(window).height()) {
+                height = height - (total_height-$(window).height());
+                console.log(height);
+            }
+
+            //modal.find('.img-video').css({'height':height+'px'})
+            modal.find('.img-video').css({
+                'height': '100%', 
+                'padding-bottom': $('.video-info-modal').outerHeight() + 'px'
+            });
+            img_header.css(resizeImage(utils.biggerMediafiles.width, utils.biggerMediafiles.height, modal.find('.img-video')));
+
+            //TODO: inserire spinner
+            //TODO: vedere se si riesce a sistemare la transizione fade
+
+        });
+    }
 });
 
 /**

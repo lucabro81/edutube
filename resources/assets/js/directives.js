@@ -35,27 +35,15 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
                 }, true);
             });
 
-            /*
-            element.on('layoutComplete',
-                function() {
-                    $('.post-open').css({'width':'100%'});
-                }
-            )
-            */
-
             scope.modalInfoShow = function(item, modal_sel){
-            //scope.modalInfoShow = function(item, selected_elem){
-
-                /*var last_item = $(".video-prev").filter(function() { 
-                    return $(this).offset().top == $(selected_elem).offset().top 
-                }).last();
-
-                last_item.after("<div class='video-prev post-open'></div>");
-
-                element.isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' }); */
-
-
-                //console.log($((element).children("#"+filtered_items.last().attr('id'))));
+            
+                // CLOSE FLOATING PLAYER
+                console.log($('#floating_player').is(':visible'));
+                if ($('#floating_player').is(':visible')) {
+                    stopVideo('floating');
+                    $('div#video-cont-floating').remove();
+                    $('#floating_player').fadeTo(200, 0);
+                }
 
                 // INIT MODAL
                 var modal = $(modal_sel);
@@ -73,9 +61,7 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
                     }
                 });
 
-
-
-
+                // Send data for modal
                 dataService.post = item;
 
                 // TODO: ora che c'è la direttiva funcionante tutta questa parte può essere sbrigata dal template
@@ -88,8 +74,6 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
                 $.each(mediafiles, function(i, obj) {
                     utils.biggerMediafiles = obj;
                 });
-
-
 
                 img_header.attr('src', utils.biggerMediafiles.url);
                 img_header.one('load', function () {
@@ -133,10 +117,7 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
                         img_header.css(resizeImage(utils.biggerMediafiles.width, utils.biggerMediafiles.height, modal.find('.img-video')));
                     }
                 });
-
-
-
-                //$('body').addClass('noscroll');
+                
             }
         }
     }
@@ -272,7 +253,6 @@ app.directive('ngOnshow', function ($timeout, dataService) {
                 return dataService.post;
             }, 
             function(value, oldValue) {
-                console.log(scope);
                 
                 if (scope.setModalGraphic) {
                     scope.setModalGraphic()
