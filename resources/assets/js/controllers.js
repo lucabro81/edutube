@@ -48,7 +48,7 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
         });
         
         $('html, body').removeClass('noscroll');
-    } 
+    };
     
     /**
      * 
@@ -133,15 +133,26 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
     
     /**
      * 
-     * @param {type} box
-     * @returns {undefined}
+     * @param {selector} box
+     * @returns {void}
      */
     $scope.pushpin = function(box) {
+        
+        $(box).fadeTo(200, 1).draggable();
+        
+        if (utils.player['modal'] != null) {
+            var videCurrentTime = utils.player['modal'].getCurrentTime();
+            playerManageHelper($('#play-video-floating'), 'video-cont-floating', 'floating', videCurrentTime);
+        }
+        
         $('#myModal').modal('hide');
-        $(box).fadeTo(1, 200).draggable();
-    }
+        
+        debug_console("videCurrentTime: " + videCurrentTime);
+        
+    };
     
-    /*var promise;      
+    /*
+    var promise;      
     var holded = false;
 
     $scope.mouseDown = function() {
@@ -170,12 +181,37 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
                 
             }
         }
-    },true);*/
+    },true);
+    */
 });
 
-app.controller('menuCtrl', function menuCtrl($scope, $window) {
+app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interval){
+   /**
+     * 
+     * @returns {undefined}
+     */
+    $scope.setFloatingGraphic = function() {
+        $scope.item = dataService.post;
+    }; 
     
-    console.log($scope);
+    /**
+     * 
+     * @param {type} floating_sel
+     * @returns {undefined}
+     */
+    $scope.pushpinHide = function(floating_sel) {
+        console.log(floating_sel);
+        
+        stopVideo('floating');
+        $('div#video-cont-floating').remove();
+        $(floating_sel).fadeTo(200, 0);
+    };
+});
+
+/**
+ * 
+ */
+app.controller('menuCtrl', function menuCtrl($scope, $window) {
     
     // conservare
     $scope.$watch(function() { return $scope.fixed }, function(newValue, oldValue) {

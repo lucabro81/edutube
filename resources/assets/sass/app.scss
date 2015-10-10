@@ -256,10 +256,28 @@ float: right!important;
     }
 }
 
+.video-info {
+    position: relative;
+    padding: 10px;
+    bottom: 0px;
+    width: 100%;
+    z-index: 110;
+
+    a { text-decoration: none; color: #ffffff}
+
+    .date { 
+        font-size: 12px;
+        font-weight: 100; 
+    }
+    .title { font-size: 22px; font-weight: 300; }
+    .author { font-size: 12px;  font-weight: 100; margin: 0px; }
+
+}
+
 .video-prev {
     width: 320px;
     //min-width:20%;
-    height: 295px;
+    height: 284px;
     //height: auto;
     margin-bottom:10px;
     
@@ -300,25 +318,7 @@ float: right!important;
         }
     }
     
-    .video-info {
-        position: relative;
-        padding: 10px;
-        bottom: 0px;
-        width: 100%;
-        z-index: 110;
-        
-        a { text-decoration: none; color: #ffffff}
-        
-        .date { 
-            font-size: 12px;
-            font-weight: 100; 
-            
-            
-        }
-        .title { font-size: 22px; font-weight: 300; }
-        .author { font-size: 12px;  font-weight: 100;}
-                
-    }
+    
     
     p.title {
         @include text-truncate;
@@ -414,9 +414,44 @@ float: right!important;
     left: 30px;
     background: #ffffff;
     z-index: 10000;
-    width: 500px;
-    height: 300px;
+    width: 320px;
+    //height: 284px; 
+    height:180px;
+    //overflow: hidden;
     @include box-shadow(null, 0, 0, 100px, 30px, rgba(0, 0, 0, 0.5));
+    
+    .video-info {
+        position:absolute; 
+        bottom:0px; 
+        z-index:-1
+    }
+    
+    #play-video-floating {
+        font-size: 50px; 
+        font-size: 50px;
+        color: #ffffff;
+        display: block;
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        margin-top: -25px;
+        margin-left: -25px;
+        left: 50%;
+    }
+    
+    .header {
+        
+        position: absolute;
+        padding:4px;
+        width: 100%;
+        top:0px;
+        left:0px;
+
+        button,
+        button:hover {
+            color: #ffffff !important;
+        }
+    }
 }
 
 .modal-info-video {
@@ -557,6 +592,14 @@ float: right!important;
                     left: 0px; 
                     background: url(../img/gridtile.png);
                     padding-bottom: inherit;
+                    
+                    /*div#video-cont {
+                        position: absolute!important; 
+                        width:100%!important; 
+                        height:100%!important; 
+                        top:0px!important; 
+                        padding-bottom:inherit!important;
+                    }*/
                 }
                 
                 .comments {

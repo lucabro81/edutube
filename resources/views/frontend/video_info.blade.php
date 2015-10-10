@@ -1,5 +1,29 @@
 
-<div id="floating_player"></div> 
+<div id="floating_player" class="video-prev" ng-controller="pushpinCtrl" ng-onshow ng-hoverfloating>
+    
+    <div class="header bg-{??item.categories[0].slug??} text-right clearfix">
+        <div class="pull-right" style="position: relative;">
+            <button class="btn simple-button" ng-click="pushpinHide('#floating_player')"><i class="glyphicon glyphicon-remove"></i></button>
+        </div>
+        
+        <div class="pull-right" style="position: relative;">
+            <button class="btn simple-button"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+        </div>
+    </div>
+    
+    <div class="img-prev-container" style="position: relative;">
+        <img ng-src="{??item.mediafiles | imgByName: 'thubnail_medium'??}"> 
+        <button id ="play-video-floating" data-videoid = "{??item.YT_id??}" class="simple-button" >
+            <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
+        </button>
+    </div>
+    
+    <div class = "video-info bg-{??item.categories[0].slug??}">
+        <p class = "date">{??item.created_at | dateToISO | date:'dd/MM/yyyy'??}</p>
+        <p class = "title"><a href = "#" title="">{??item.title??}</a></p>
+        <p class = "author"><a href = "#">Autore</a> - <a href = "">Loader</a></p>
+    </div>
+</div> 
 
 <div id="myModal" class="modal modal-info-video" data-open = "false" ng-controller="modalInfoCtrl" ng-onshow>
 

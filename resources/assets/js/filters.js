@@ -20,16 +20,20 @@ app.filter('imgByName', function(){
     return function(input, name) {
         
         var imgUrl = '';
-        $.each(input, function(i, obj) {
-            if (obj.nome === name) {
-                imgUrl = obj.url;
-                return false;
-            }
-        });
         
-        if (imgUrl === '') {
-            return 'placeholder';
+        if (input) {
+            $.each(input, function(i, obj) {
+                if (obj.nome === name) {
+                    imgUrl = obj.url;
+                    return false;
+                }
+            });
+
+            if (imgUrl === '') {
+                return 'placeholder';
+            }
+            return imgUrl;
         }
-        return imgUrl;
+        return null
     };
 });

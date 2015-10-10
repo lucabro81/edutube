@@ -226,6 +226,45 @@ app.directive('ngHover', ['$animate', function($animate) {
     }
 }]);
 
+app.directive('ngHoverfloating', ['$animate', function($animate) {
+    return function(scope, element, attrs) {
+        element.hover(
+            function() {
+                
+                // appare titolo video floating
+                var infoVideo = element.find('.video-info');
+                infoVideo.stop(true).animate({
+                   'bottom' : (-infoVideo.outerHeight()) + 'px' 
+                },
+                100);
+                
+                // appare header floating
+                var header = element.find('.header');
+                header.stop(true).animate({
+                   'top' : (-header.outerHeight()) + 'px' 
+                },
+                100);
+            },
+            function() {
+                
+                // scompare titolo video floating
+                var infoVideo = element.find('.video-info');
+                infoVideo.stop(true).animate({
+                   'bottom' : '0px' 
+                },
+                100);
+                
+                // scompare header floating
+                var header = element.find('.header');
+                header.stop(true).animate({
+                   'top' : '0px' 
+                },
+                100);
+            }
+        );
+    }
+}]);
+
 app.directive('ngOnshow', function ($timeout, dataService) {
     
     return function(scope, element, attrs) {
@@ -233,7 +272,16 @@ app.directive('ngOnshow', function ($timeout, dataService) {
                 return dataService.post;
             }, 
             function(value, oldValue) {
-                scope.setModalGraphic()
+                console.log(scope);
+                
+                if (scope.setModalGraphic) {
+                    scope.setModalGraphic()
+                }
+                
+                if (scope.setFloatingGraphic) {
+                    scope.setFloatingGraphic();
+                }
+                
             }, 
             true);/**/
     }
