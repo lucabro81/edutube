@@ -4,11 +4,10 @@
 <head>
     <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
     <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"-->
+    {!!Html::style('css/app.min.css')!!}
     
-    {!!Html::style('css/app.css')!!}
-    
-    <!--{!!GW::google_js()!!}
-    script src="https://www.youtube.com/player_api"></script>
+    {!!GW::google_js()!!}
+    <script src="https://www.youtube.com/player_api"></script>
     
     <script>  
         /*$(document).on('click', '#playlistButton', function() {
@@ -106,14 +105,13 @@
         
         }*/
     
-    </script-->
+    </script>
     
     @yield('css_aggiuntivi')
         
 </head>
 
 <body ng-app="edutube">
-    @include('frontend/header')
 
     @yield('content')
 
@@ -126,6 +124,7 @@
     {!!Html::script('angular/angular.js')!!}
     {!!Html::script('angular/angular-route.js')!!}
     {!!Html::script('angular/angular-animate.js')!!}
+    {!!Html::script('angular/sticky.js')!!}
     
     {!!Html::script('js/isotope.pkgd.min.js')!!}
     {!!Html::script('js/app.min.js')!!}

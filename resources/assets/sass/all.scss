@@ -1,4 +1,75 @@
-// INIT /* Inizio */
+@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300);
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300,500,100);
+
+$category-storia                      : #FBB829;                        // Giallo
+$category-storia-70per                : rgba($category-storia, 0.7);    // Giallo alpha 70%
+$category-storia-50per                : rgba($category-storia, 0.5);    // Giallo alpha 50%
+$category-storia-20per                : rgba($category-storia, 0.2);    // Giallo alpha 20%
+$category-storia-darken               : darken($category-storia, 10%);  // Giallo scuro
+$category-storia-lighten              : lighten($category-storia, 20%); // Giallo chiaro
+
+$category-scienza                     : #543511;                         // Marrone
+$category-scienza-70per               : rgba($category-scienza, 0.7);    // Marrone alpha 70%
+$category-scienza-50per               : rgba($category-scienza, 0.5);    // Marrone alpha 50%
+$category-scienza-20per               : rgba($category-scienza, 0.2);    // Marrone alpha 20%
+$category-scienza-darken              : darken($category-scienza, 10%);  // Marrone scuro
+$category-scienza-lighten             : lighten($category-scienza, 20%); // Marrone chiaro
+
+$category-tecnologia                  : #F02311;                            // Rosso 
+$category-tecnologia-70per            : rgba($category-tecnologia, 0.7);    // Rosso alpha 70%
+$category-tecnologia-50per            : rgba($category-tecnologia, 0.5);    // Rosso alpha 50%
+$category-tecnologia-20per            : rgba($category-tecnologia, 0.2);    // Rosso alpha 20%
+$category-tecnologia-darken           : darken($category-tecnologia, 10%);  // Rosso scuro 
+$category-tecnologia-lighten          : lighten($category-tecnologia, 20%); // Rosso chiaro 
+
+$category-storia-della-scienza        : #7FAF1B;                                        // Verde
+$category-storia-della-scienza-70per  : rgba($category-storia-della-scienza, 0.7);      // Verde alpha 70%
+$category-storia-della-scienza-50per  : rgba($category-storia-della-scienza, 0.5);      // Verde alpha 50%
+$category-storia-della-scienza-20per  : rgba($category-storia-della-scienza, 0.2);      // Verde alpha 20%
+$category-storia-della-scienza-darken : darken($category-storia-della-scienza, 10%);    // Verde scuro
+$category-storia-della-scienza-lighten: lighten($category-storia-della-scienza, 20%);   // Verde chiaro
+
+$category-fisica                      : #FF9999;                        // Rosa
+$category-fisica-70per                : rgba($category-fisica, 0.7);    // Rosa alpha 70%
+$category-fisica-50per                : rgba($category-fisica, 0.5);    // Rosa alpha 50%
+$category-fisica-20per                : rgba($category-fisica, 0.2);    // Rosa alpha 20%
+$category-fisica-darken               : darken($category-fisica, 10%);  // Rosa scuro
+$category-fisica-lighten              : lighten($category-fisica, 20%); // Rosa chiaro
+
+$category-chimica                     : #327CCB;                         // Blu
+$category-chimica-70per               : rgba($category-chimica, 0.7);    // Blu alpha 70%
+$category-chimica-50per               : rgba($category-chimica, 0.5);    // Blu alpha 50%
+$category-chimica-20per               : rgba($category-chimica, 0.2);    // Blu alpha 20%
+$category-chimica-darken              : darken($category-chimica, 10%);  // Blu scuro
+$category-chimica-lighten             : lighten($category-chimica, 20%); // Blu chiaro
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin box-shadow($inset, $horizzontal_length, $vertical_length, $blur_radius, $spread, $color) {
+    -webkit-box-shadow:$inset $horizzontal_length $vertical_length $blur_radius $spread $color;
+    box-shadow:$inset $horizzontal_length $vertical_length $blur_radius $spread $color;
+}
+
+@mixin rotate($degree) {
+    -webkit-transform: rotate($degree);
+    -moz-transform: rotate($degree);
+    -ms-transform: rotate($degree);
+    -o-transform: rotate($degree);
+    transform: rotate($degree);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); // TODO: credo siano i quarti - verificare
+}
 
 .noscroll {
     overflow: hidden;
@@ -45,7 +116,8 @@ p {
     a:hover {
         color: #000000;
     }
-}
+}/**/
+
 
 .navbar-collapse.collapse {
 display: block!important;
@@ -69,23 +141,6 @@ float: right!important;
     color: #ffffff;
     margin: 0 auto;
 }
-
-// jQueryUI resizable CSS
-.ui-icon { width: 16px; height: 16px; background-image: url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
-.ui-resizable { position: relative;}
-.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
-.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
-.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0px; }
-.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0px; }
-.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0px; height: 100%; }
-.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0px; height: 100%; }
-.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
-.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
-.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
-.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
-.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }
-
-// INIT /* Fine */
 
 // Categorie /* INIZIO */
 
@@ -736,3 +791,17 @@ section {
 section article { 
     margin: 0 8px 8px 0; padding: 4px; 
     border: 1px solid #ddd; }
+
+.ui-icon { width: 16px; height: 16px; background-image: url(http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/images/ui-icons_222222_256x240.png)/*{iconsContent}*/; }
+.ui-resizable { position: relative;}
+.ui-resizable-handle { position: absolute;font-size: 0.1px;z-index: 99999; display: block;}
+.ui-resizable-disabled .ui-resizable-handle, .ui-resizable-autohide .ui-resizable-handle { display: none; }
+.ui-resizable-n { cursor: n-resize; height: 7px; width: 100%; top: -5px; left: 0px; }
+.ui-resizable-s { cursor: s-resize; height: 7px; width: 100%; bottom: -5px; left: 0px; }
+.ui-resizable-e { cursor: e-resize; width: 7px; right: -5px; top: 0px; height: 100%; }
+.ui-resizable-w { cursor: w-resize; width: 7px; left: -5px; top: 0px; height: 100%; }
+.ui-resizable-se { cursor: se-resize; width: 12px; height: 12px; right: 1px; bottom: 1px; }
+.ui-resizable-sw { cursor: sw-resize; width: 9px; height: 9px; left: -5px; bottom: -5px; }
+.ui-resizable-nw { cursor: nw-resize; width: 9px; height: 9px; left: -5px; top: -5px; }
+.ui-resizable-ne { cursor: ne-resize; width: 9px; height: 9px; right: -5px; top: -5px;}
+.ui-icon-gripsmall-diagonal-se { background-position: -64px -224px; }

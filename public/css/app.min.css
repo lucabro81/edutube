@@ -5992,15 +5992,6 @@ button.close {
   .hidden-print {
     display: none !important; } }
 
-/*********************/
-/***** VARIABILI *****/
-/*********************/
-/******************/
-/***** MIXINS *****/
-/******************/
-/***************/
-/***** CSS *****/
-/***************/
 .noscroll {
   overflow: hidden; }
 
@@ -6679,4 +6670,4 @@ section article {
 .ui-icon-gripsmall-diagonal-se {
   background-position: -64px -224px; }
 
-/*# sourceMappingURL=app.css.map */
+/*# sourceMappingURL=app.min.css.map */

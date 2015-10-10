@@ -1,0 +1,27 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+
+@mixin text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+@mixin box-shadow($inset, $horizzontal_length, $vertical_length, $blur_radius, $spread, $color) {
+    -webkit-box-shadow:$inset $horizzontal_length $vertical_length $blur_radius $spread $color;
+    box-shadow:$inset $horizzontal_length $vertical_length $blur_radius $spread $color;
+}
+
+@mixin rotate($degree) {
+    -webkit-transform: rotate($degree);
+    -moz-transform: rotate($degree);
+    -ms-transform: rotate($degree);
+    -o-transform: rotate($degree);
+    transform: rotate($degree);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3); // TODO: credo siano i quarti - verificare
+}

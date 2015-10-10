@@ -1,24 +1,43 @@
-<div class="video-prev" ng-repeat="item in items" ng-hover>
+<div class="video-prev" id = "video-prev-{{ item.id }}" ng-repeat="item in items" ng-hover>
     
     <img ng-src="{{ item.mediafiles | imgByName: 'thubnail_medium' }}"> 
     
     <div class = "video-instruments bg-{{ item.categories[0].slug }}-dark">
-        <a href="#"><i class="glyphicon glyphicon-cog"></i></a>&nbsp;&nbsp;
-        <a href="#"><i class="glyphicon glyphicon-play-circle"></i></a>&nbsp;&nbsp;
-        <a href="#"><i class="glyphicon glyphicon-flag"></i></a>
+        <div class="pull-left dropup">
+            <button class="btn simple-button dropdown-toggle" 
+                    data-toggle="dropdown" 
+                    role="button" 
+                    aria-haspopup="true" 
+                    aria-expanded="false">
+                <i class="glyphicon glyphicon-cog"></i></button>
+            <ul class="dropdown-menu bg-{{ item.categories[0].slug }}-dark">
+                <li><a href="#"><i class="glyphicon glyphicon-share-alt"></i>&nbsp;&nbsp;&nbsp;Condividi</a></li>
+                <li><a href="#"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;&nbsp;Aggingi a Playlist</a></li>
+            </ul>&nbsp;&nbsp;
+        </div>
+        <button class="btn simple-button"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+        <button class="btn simple-button"><i class="glyphicon glyphicon-flag"></i></button>&nbsp;&nbsp;
     </div>
 
     <div class="frame-prev bd-{{ item.categories[0].slug }}-dark" align="center">
         <div class="cover-prev-img bg-{{ item.categories[0].slug }}-50perc">
-            <a href="#" 
-               class="modal-info" 
+            <!--button 
+               class="btn modal-info" 
                data-slug="" 
                data-video=""
-               ng-click="modalInfoShow(item, '.modal-info-video')"><i class="glyphicon glyphicon-info-sign"></i></a>&nbsp;&nbsp;
-            <a href="#" 
-               class="modal-play" 
+               ng-click="modalInfoShow(item, '.modal-info-video')"><span class="glyphicon glyphicon-info-sign"></span></button>&nbsp;&nbsp;-->
+            <!--button 
+               class="btn modal-play" 
                data-slug="" 
-               data-video=""><i class="glyphicon glyphicon-play"></i></a>
+               data-video=""
+               ng-click="modalInfoShow(item, '.modal')"><span class="glyphicon glyphicon-play"></span></button-->
+             <button 
+               class="btn modal-play" 
+               data-slug="" 
+               data-video="" 
+               data-toggle="modal" 
+               data-target="#myModal"
+               ng-click="modalInfoShow(item, '.modal-info-video')"><span class="glyphicon glyphicon-play"></span></button>
         </div>
     </div>
 
