@@ -10,7 +10,6 @@ app.controller('ItemsCtrl', function ItemsCtrl($scope, $timeout, dataService) {
      * @returns {undefined}
      */
     $scope.update = function() {
-        
         dataService.get().then(function (data) {                       
             $scope.collection = data;
         });
@@ -23,7 +22,7 @@ app.controller('ItemsCtrl', function ItemsCtrl($scope, $timeout, dataService) {
 /**
  * 
  */
-app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $interval){
+app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, autoPlayer, $interval){
     
     /**
      * 
@@ -32,6 +31,7 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
     $scope.setModalGraphic = function() {
         $scope.item = dataService.post;
     };
+    
     
     /**
      * 
@@ -48,6 +48,8 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
         });
         
         $('html, body').removeClass('noscroll');
+        
+        
     };
     
     /**
@@ -61,6 +63,8 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
         
         var widthModalDialog = $('.modal-dialog').width();
         
+        console.log(widthModalDialog);
+        
         $(box).draggable({
             containment: "parent",
             snap: "#myModal",
@@ -68,9 +72,6 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
                 
                 /*var positionRightDraggableBox = $(window).width()-(ui.position.left + $(box).width());
                 
-                console.log("ui.position.left: " + ui.position.left);
-                console.log("$(box).width(): " + $(box).width());
-                console.log("positionRightDraggableBox: " + positionRightDraggableBox);
                 
                 if (positionRightDraggableBox <= 30) {
                     $('.modal-dialog').css({
@@ -119,7 +120,6 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
     
     /*$scope.$watch(function() { return $scope.fixed }, function(newValue, oldValue) {
         
-            console.log(newValue+" "+oldValue);
             if (newValue != oldValue) {
                 if (newValue) {
                     $('nav').addClass('fixed-menu');
@@ -143,6 +143,7 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
         if (utils.player['modal'] != null) {
             var videCurrentTime = utils.player['modal'].getCurrentTime();
             playerManageHelper($('#play-video-floating'), 'video-cont-floating', 'floating', videCurrentTime);
+            $('#floating_player').attr('ng-statuslistener', utils.player['floating'].getPlayerState());
         }
         
         $('#myModal').modal('hide');
@@ -173,8 +174,6 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, $int
                 //hold
                 
                 
-                console.log(utils.x);
-                console.log(utils.y);
             }
             else {
                 //release
@@ -200,15 +199,21 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
      * @returns {undefined}
      */
     $scope.pushpinHide = function(floating_sel) {
-        console.log(floating_sel);
         
         stopVideo('floating');
         $('div#video-cont-floating').remove();
         $(floating_sel).fadeTo(200, 0);
     };
     
+    /**
+     * 
+     * @param {type} item
+     * @param {type} modal_sel
+     * @param {type} floating_sel
+     * @returns {undefined}
+     */
     $scope.returnModal = function(item, modal_sel, floating_sel) {
-        $scope.pushpinHide(floating_sel);
+        
         
         var modal = $(modal_sel);
 
@@ -237,8 +242,6 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
             utils.biggerMediafiles = obj;
         });
 
-
-
         img_header.attr('src', utils.biggerMediafiles.url);
         img_header.one('load', function () {
 
@@ -247,7 +250,6 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
 
             if (total_height > $(window).height()) {
                 height = height - (total_height-$(window).height());
-                console.log(height);
             }
 
             //modal.find('.img-video').css({'height':height+'px'})
@@ -261,7 +263,21 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
             //TODO: vedere se si riesce a sistemare la transizione fade
 
         });
+        
+        if (utils.player['floating'] != null) {
+            var videCurrentTime = utils.player['floating'].getCurrentTime();
+            playerManageHelper($('#play-video'), 'video-cont', 'modal', videCurrentTime);
+            $('#myModal').attr('ng-statuslistener', utils.player['modal'].getPlayerState());
+        }
+        
+        $scope.pushpinHide(floating_sel);
     }
+    
+    /*
+    
+    $scope.$watch(function() { return $scope.element }, function(newValue, oldValue) {
+        },true
+    );*/
 });
 
 /**
@@ -272,7 +288,6 @@ app.controller('menuCtrl', function menuCtrl($scope, $window) {
     // conservare
     $scope.$watch(function() { return $scope.fixed }, function(newValue, oldValue) {
         
-            console.log(newValue+" "+oldValue);
             if (newValue != oldValue) {
                 if (newValue) {
                     $('nav').addClass('fixed-menu');
@@ -284,4 +299,26 @@ app.controller('menuCtrl', function menuCtrl($scope, $window) {
         },true
     );/**/
     
+});
+
+app.controller('YouTubeCtrl', function YouTubeCtrl($scope, YT_event) {
+    $scope.YT_event = YT_event;
+    $scope.yt = {
+        playerStatus: 0
+    }
+    /**
+     * 
+     */
+    $scope.playVideo = function() {
+        this.$broadcast(YT_event.PLAY);
+    }
+    
+    /**
+     * TODO: questo controller e rispettiva directive sono ok, usarli per rifare tutte le opzioni del player come stop all'uscita e scambio di player
+     */
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data, code) {
+        console.log(code);
+        
+        $scope.yt.playerStatus = code;
+    });
 })

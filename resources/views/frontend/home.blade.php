@@ -14,10 +14,11 @@
     <div id="main-news" class="fluid-container" style="height:500px">
         <img src="{{ asset('img/ambiente.jpg')}}">
     </div>
-    <div style="width: 100%; height: 40px;">
-
-    </div>
+    
+    <div style="width: 100%; height: 40px;"></div>
+    
     <div id="main-cont" style="width:100%; overflow: hidden;" ng-controller="ItemsCtrl">
+        
         <div style="width:auto; margin: 0 -160px 0 -160px;">
             <div class="js-isotope" id="main" data-iso-repeat="collection">
 
@@ -31,7 +32,9 @@
             <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
         </div>
         <div class="row">
-            <div class="col-xs-12">aasadasda</div>
+            <div class="col-xs-12" id ="queue-box-cont">
+                
+            </div>
         </div>
     </div>
 

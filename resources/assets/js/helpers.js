@@ -66,17 +66,35 @@ function hide_incomplete_prev(this_video_prev, ombra, left_mod, cover) {
 */
 function onPlayerStateChange(event, playerType) {
 
-   switch (event.data) {
-       case -1: return null; break;
-       case 0 : 
-           console.log('stop video');
-           stopVideo(playerType); 
-       break;
-       case 2:
-           console.log('pause video');
-       break;
-       default: return null; break;
-   }
+    if (utils.player['floating'] != null) {
+        $('#floating_player').attr('ng-statuslistener', event.data);
+    }
+    
+    if (utils.player['modal'] != null) {
+        $('#myModal').attr('ng-statuslistener', event.data);
+    }
+
+    console.log('event.data' + event.data);
+
+    switch (event.data) {
+        case -1: return null; break;
+        case 0 : 
+            console.log('stop video');
+            stopVideo(playerType); 
+
+            /*if ($('#queue-box-cont').find('div').length > 0) {
+                playerManageHelper($('#play-video-floating'), 'video-cont-floating', 'floating', 0);
+            }*/
+
+        break;
+        case 2:
+            console.log('pause video');
+        break;
+        case 5:
+            console.log('cued video');
+        break;
+        default: return null; break;
+    }
 
    /*var max_quality = event.target.getAvailableQualityLevels()[0];
    var current_quality = event.target.getPlaybackQuality();
@@ -115,10 +133,10 @@ function stopVideo(playerType){
     if (utils.player[playerType] !== null) {
 
         utils.player[playerType].stopVideo();
-        utils.player[playerType].clearVideo();
-        utils.player[playerType].destroy();
+        //utils.player[playerType].clearVideo();
+        //utils.player[playerType].destroy();
         
-        utils.player[playerType] = null;
+        //utils.player[playerType] = null;
         
         return true;
     }

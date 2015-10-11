@@ -15,29 +15,20 @@
                 <li><a href="#"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;&nbsp;Aggingi a Playlist</a></li>
             </ul>&nbsp;&nbsp;
         </div>
-        <button class="btn simple-button"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+        <button class="btn simple-button" ng-addqueue='{"queueCont": ".queue-box", "id": "{{item.YT_id}}"}'><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
         <button class="btn simple-button"><i class="glyphicon glyphicon-flag"></i></button>&nbsp;&nbsp;
     </div>
 
     <div class="frame-prev bd-{{ item.categories[0].slug }}-dark" align="center">
         <div class="cover-prev-img bg-{{ item.categories[0].slug }}-50perc">
-            <!--button 
-               class="btn modal-info" 
-               data-slug="" 
-               data-video=""
-               ng-click="modalInfoShow(item, '.modal-info-video')"><span class="glyphicon glyphicon-info-sign"></span></button>&nbsp;&nbsp;-->
-            <!--button 
-               class="btn modal-play" 
-               data-slug="" 
-               data-video=""
-               ng-click="modalInfoShow(item, '.modal')"><span class="glyphicon glyphicon-play"></span></button-->
-             <button 
-               class="btn modal-play" 
-               data-slug="" 
-               data-video="" 
-               data-toggle="modal" 
-               data-target="#myModal"
-               ng-click="modalInfoShow(item, '.modal-info-video')"><span class="glyphicon glyphicon-play"></span></button>
+            <button class       = "btn modal-play" 
+                    data-slug   = "" 
+                    data-video  = "" 
+                    data-toggle = "modal" 
+                    data-target = "#myModal"
+                    ng-click    = "modalInfoShow(item, '.modal-info-video')">
+                <span class="glyphicon glyphicon-play"></span>
+            </button>
         </div>
     </div>
 

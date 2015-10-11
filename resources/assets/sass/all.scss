@@ -479,10 +479,17 @@ float: right!important;
     }
 }
 
+youtube {
+    display:block;
+    position:absolute;
+    top:0px;
+    left:0px;
+}
+
 #floating_player {
     display: none;
     position: fixed;
-    top: 30px;
+    top: 50px;
     left: 30px;
     background: #ffffff;
     z-index: 10000;

@@ -1,5 +1,5 @@
 
-<div id="floating_player" class="video-prev" ng-controller="pushpinCtrl" ng-onshow ng-hoverfloating>
+<div id="floating_player" class="video-prev" ng-controller="pushpinCtrl" ng-onshow ng-hoverfloating ng-statuslistener="-1">
     
     <div class="header bg-{??item.categories[0].slug??} text-right clearfix">
         <div class="pull-right" style="position: relative;">
@@ -7,7 +7,7 @@
         </div>
         
         <div class="pull-right" style="position: relative;">
-            <button class="btn simple-button"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+            <button class="btn simple-button" ng-addqueue><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
         </div>
         
         <div class="pull-left" >
@@ -32,7 +32,7 @@
     </div>
 </div> 
 
-<div id="myModal" class="modal modal-info-video" data-open = "false" ng-controller="modalInfoCtrl" ng-onshow>
+<div id="myModal" class="modal modal-info-video" data-open = "false" ng-controller="modalInfoCtrl" ng-onshow ng-statuslistener>
 
     <div class = "modal-dialog modal-dialog-info-video" id = "video-info-0">
         <div class = "modal-content-info-video">
@@ -59,20 +59,7 @@
                 </div>
                 
                 <div class="pull-right" style="position: relative;">
-                    <button class="btn simple-button"
-                            data-toggle="dropdown" 
-                                    role="button" 
-                                    aria-haspopup="true" 
-                                    aria-expanded="false"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
-                    <ul class="dropdown-menu bg-{??item.categories[0].slug??}">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">One more separated link</a></li>
-                                </ul>
+                    <button class="btn simple-button" ng-addqueue><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
                 </div>
                 <div class="pull-right" style="position: relative;">
                     <button class="btn simple-button"
@@ -117,16 +104,17 @@
                                               overflow: hidden;">
                     <div class="img-video">
                         <img id="img-prev-video" src="#">
-                        <div class="sfondo-grid">
-                            <button id ="play-video" data-videoid = "{??item.YT_id??}" class="simple-button" style="font-size: 150px; 
+                        <div class="sfondo-grid" ng-controller="YouTubeCtrl">
+                            <button id ="play-video1" data-videoid = "{??item.YT_id??}" class="simple-button" style="font-size: 150px; 
                                          color:#ffffff;
                                          display: block;
                                          margin: 0 auto;
                                          position: relative;
                                          top: 50%;
-                                         margin-top: -75px" ><span class="glyphicon glyphicon-play" 
+                                         margin-top: -75px" ng-click="playVideo()"><span class="glyphicon glyphicon-play" 
                                   aria-hidden="true" 
                                   ></span></button>
+                            <youtube videoid="{??item.YT_id??}" status = "{??yt.playerStatus??}"></youtube>
                         </div>
                     </div>
                     <div class="video-info-modal bg-{??item.categories[0].slug??}">

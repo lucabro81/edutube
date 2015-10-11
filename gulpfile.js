@@ -33,10 +33,10 @@ elixir(function(mix) {
             'resources/assets/js/helpers.js',
             'resources/assets/js/frontend.js',
             'resources/assets/js/app.js', 
-            'resources/assets/js/filters.js', 
-            'resources/assets/js/directives.js', 
+            'resources/assets/js/filters.js',
+            'resources/assets/js/services.js',  
             'resources/assets/js/controllers.js', 
-            'resources/assets/js/services.js', 
+            'resources/assets/js/directives.js', 
         ], 
         'public/js/app.min.js'
     );

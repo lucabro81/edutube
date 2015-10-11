@@ -3,6 +3,19 @@ var app = angular.module('edutube', ['ngRoute', 'ngAnimate'], function($interpol
     $interpolateProvider.endSymbol('??}');
 });
 
+app.constant('YT_event', {
+    UNSTARTED       : 0,
+    ENDED           : 1,
+    PLAYING         : 2,
+    PAUSED          : 3,
+    BUFFERING       : 4,
+    VIDEO_CUED      : 5,
+    STATUS_CHANGE   : 6,
+    STOP            : 7, 
+    PLAY            : 8,
+    PAUSE           : 9
+});
+
 /*app.run(function(){
     
 });

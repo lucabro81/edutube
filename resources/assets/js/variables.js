@@ -17,7 +17,8 @@ var utils = {
     'y'                   : null,
     'player'              : {
         'modal'     : null,
-        'floating'  : null
+        'floating'  : null,
+        'queue'     : null
     }
 }
 

@@ -16,3 +16,9 @@ app.service('dataService', function ($http) {
         post: null 
     };
 });
+
+app.service('autoPlayer', function() {
+    return {
+        play: false
+    }
+});

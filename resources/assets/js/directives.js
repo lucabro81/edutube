@@ -38,7 +38,6 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
             scope.modalInfoShow = function(item, modal_sel){
             
                 // CLOSE FLOATING PLAYER
-                console.log($('#floating_player').is(':visible'));
                 if ($('#floating_player').is(':visible')) {
                     stopVideo('floating');
                     $('div#video-cont-floating').remove();
@@ -87,7 +86,6 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
 
                         if (total_height > $(window).height()) {
                             height = height - (total_height-$(window).height());
-                            console.log(height);
                         }
 
                         //modal.find('.img-video').css({'height':height+'px'})
@@ -122,6 +120,152 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
         }
     }
 });
+
+/**
+ * Based on poxrud/youtube-directive-example
+ * Github https://github.com/poxrud/youtube-directive-example/blob/master/application.js
+ * Blog post http://blog.oxrud.com/posts/creating-youtube-directive/
+ */
+app.directive('youtube', function($window, dataService, autoPlayer, YT_event){
+    
+    
+    return {
+        restrict: "E",
+
+        template: '<div style="width:100%; height:100%;"></div>',
+        
+        scope: {
+            videoid : '@'
+        },
+
+        link: function(scope, element, attrs) {
+            
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+            var player;
+            
+            /*scope.$watch(function() { return autoPlayer.play }, function(value) {
+                if (value) {
+                    
+                    element.css({
+                        'width':'100%', 
+                        'height':'100%', 
+                        'padding-bottom':'inherit'
+                    });
+
+                    $window.onYouTubeIframeAPIReady = function() {
+                        player = new YT.Player(element.children()[0], {
+                            videoId: scope.videoid,
+                            playerVars: {
+                                'showinfo': 0,
+                                'modestbranding': 0,
+                                'rel': 0
+                            },
+                            events: {
+                                'onReady': function(event) {
+                                    
+                                },
+                                'onStateChange': function(event) {
+                                    var message = {
+                                        event: YT_event.STATUS_CHANGE,
+                                        data: ""
+                                    };
+
+                                    switch(event.data) {
+                                        case YT.PlayerState.PLAYING:
+                                            message.data = "PLAYING";
+                                            break;
+                                        case YT.PlayerState.ENDED:
+                                            message.data = "ENDED";
+                                            break;
+                                        case YT.PlayerState.UNSTARTED:
+                                            message.data = "NOT PLAYING";
+                                            break;
+                                        case YT.PlayerState.PAUSED:
+                                            message.data = "PAUSED";
+                                            break;
+                                    };
+                                    scope.$apply(function() {
+                                        scope.$emit(message.event, message.data);
+                                    });
+                                }
+                            }
+                        });
+                    };
+                    
+                    $window.onYouTubeIframeAPIReady();
+                }
+            });*/
+            
+            scope.$on(YT_event.STOP, function () {
+                player.seekTo(0);
+                player.stopVideo();
+            });
+
+            scope.$on(YT_event.PLAY, function () {
+                
+                element.css({
+                    'width':'100%', 
+                    'height':'100%', 
+                    'padding-bottom':'inherit'
+                });
+
+                $window.onYouTubeIframeAPIReady = function() {
+                    player = new YT.Player(element.children()[0], {
+                        videoId: scope.videoid,
+                        playerVars: {
+                            'showinfo': 0,
+                            'modestbranding': 0,
+                            'rel': 0
+                        },
+                        events: {
+                            'onReady': function(event) {
+                                scope.$apply(function() {
+                                    player.playVideo();
+                                });
+                            },
+                            'onStateChange': function(event) {
+                                var message = {
+                                    event: YT_event.STATUS_CHANGE,
+                                    data: "",
+                                    code: event.data
+                                };
+                                
+                                switch(event.data) {
+                                    case YT.PlayerState.PLAYING:
+                                        message.data = "PLAYING";
+                                        break;
+                                    case YT.PlayerState.ENDED:
+                                        message.data = "ENDED";
+                                        break;
+                                    case YT.PlayerState.UNSTARTED:
+                                        message.data = "NOT PLAYING";
+                                        break;
+                                    case YT.PlayerState.PAUSED:
+                                        message.data = "PAUSED";
+                                        break;
+                                };
+                                
+                                scope.$apply(function() {
+                                    scope.$emit(message.event, message.data, message.code);
+                                });
+                            }
+                        }
+                    });
+                };
+
+                $window.onYouTubeIframeAPIReady();
+            }); 
+
+            scope.$on(YT_event.PAUSE, function () {
+                player.pauseVideo();
+            }); 
+        }
+    }
+})
 
 app.directive('ngHover', ['$animate', function($animate) {
     return function(scope, element, attrs) {
@@ -270,7 +414,9 @@ app.directive('ngOnshow', function ($timeout, dataService) {
 app.directive('ngFixedmenu', function($window) {
     
     return function(scope, element, attrs) {
-        /*$(window).on('scroll',function() {
+        
+        /*
+        $(window).on('scroll',function() {
             if ($(window).scrollTop()>500) {
                 $(element).addClass('fixed-menu');
                 $("#main-cont").css({'margin-top':'40px'});
@@ -281,10 +427,12 @@ app.directive('ngFixedmenu', function($window) {
                 $(element).removeClass('fixed-menu');
                 $("#main-cont").css({'margin-top':'0px'});
             }
-        })*/
+        })
+        */
         
         //angular.element($window).bind('scroll', function () {
-       /* element.bind('scroll', function () {
+        /*
+        element.bind('scroll', function () {
             
             if ($window.scrollY>500) {
                 scope.fixed = true;
@@ -293,18 +441,52 @@ app.directive('ngFixedmenu', function($window) {
                 scope.fixed = false;
             }
             
-            console.log(element);
-            
             scope.$apply();
-        });*/
+        });
+        */
         
         scope.$watch(function(){
                 return element[0].getBoundingClientRect().top + $window.pageYOffset;
             }, 
             function(newValue, oldValue){
-                console.log(newValue + ", " + oldValue)
             }
         );
     };
+});
+
+app.directive('ngAddqueue', function(){
+    var onclick = function(scope, element, attrs) {
+        element.click(function(){
+            var params = $.parseJSON(attrs.ngAddqueue);
+            
+            var weight = ($('#queue-box-cont').find('div').length-1 <= 0) ? 0 : $('#queue-box-cont').find('div').length-1;
+            
+            $('#play-video-floating').attr('data-videoid', params.id);
+            
+            $('#queue-box-cont').append('<div id="'+params.id+'" data-status="-1" data-weight="' + weight + '"></div>');
+        });
+    };
     
+    return {
+        restrict: "A",
+        link: onclick,
+        scope: '='
+    };
+});
+
+app.directive('ngStatuslistener', function() {
+    var watchStatus = function(scope, element, attr) {
+        scope.$watch(function() { return element.attr('ng-statuslistener') }, function(oldValue, newValue) {
+                
+            }, 
+            true            
+        );
+
+    }
+    
+    return {
+        restrict: "A",
+        link: watchStatus,
+        scope: '='
+    }
 })
