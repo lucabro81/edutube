@@ -16,6 +16,12 @@ app.constant('YT_event', {
     PAUSE           : 9
 });
 
+app.constant('MODAL_STATUS', {
+    STATUS_CHANGE   : 0,
+    CLOSE           : 1,
+    OPEN            : 2
+});
+
 /*app.run(function(){
     
 });

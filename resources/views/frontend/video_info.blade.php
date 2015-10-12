@@ -23,6 +23,7 @@
         <button id ="play-video-floating" data-videoid = "{??item.YT_id??}" class="simple-button" >
             <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
         </button>
+        <youtube videoid="{??item.YT_id??}" status = "{??yt.playerStatus??}"></youtube>
     </div>
     
     <div class = "video-info bg-{??item.categories[0].slug??}">
@@ -39,7 +40,7 @@
             
             <div class="header bg-{??item.categories[0].slug??} text-right clearfix" ng-mousedown='mouseDown("up")' ng-mouseup='mouseUp()'>
                 <div class="pull-right" style="position: relative;">
-                    <button class="btn simple-button" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i></button>
+                    <button class="btn simple-button" data-dismiss="modal" ng-click="stopVideo()"><i class="glyphicon glyphicon-remove"></i></button>
                 </div>
                 <div class="pull-left" style="position: relative;">
                     <button class="btn simple-button"
@@ -55,7 +56,7 @@
                 </div>
                 
                 <div class="pull-left" >
-                    <button class="btn simple-button"><i class="glyphicon glyphicon-resize-small" ng-click="pushpin('#floating_player')"></i></button>
+                    <button class="btn simple-button" data-dismiss="modal"><i class="glyphicon glyphicon-resize-small" ng-click="showFloating('#floating_player')"></i></button>
                 </div>
                 
                 <div class="pull-right" style="position: relative;">
@@ -104,7 +105,8 @@
                                               overflow: hidden;">
                     <div class="img-video">
                         <img id="img-prev-video" src="#">
-                        <div class="sfondo-grid" ng-controller="YouTubeCtrl">
+                        <!--div class="sfondo-grid" ng-controller="YouTubeCtrl"-->
+                        <div class="sfondo-grid">
                             <button id ="play-video1" data-videoid = "{??item.YT_id??}" class="simple-button" style="font-size: 150px; 
                                          color:#ffffff;
                                          display: block;

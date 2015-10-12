@@ -20,23 +20,73 @@ app.controller('ItemsCtrl', function ItemsCtrl($scope, $timeout, dataService) {
 });
 
 /**
- * 
+ * Controller for main player modal window
  */
-app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, autoPlayer, $interval){
+app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataService, playerStatus, YT_event, MODAL_STATUS){
+    
+    ////////////////////////////
+    /////////// VARS ///////////
+    ////////////////////////////
+    
+    $scope.YT_event = YT_event;
+    $scope.yt = {
+        playerStatus: 0
+    }
+    
+    //////////////////////////////
+    /////////// EVENTS ///////////
+    //////////////////////////////
     
     /**
+     * Listen for player status changes
+     */
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data, code) {
+        console.log(code);
+        $scope.yt.playerStatus = code;
+    });
+    
+    ///////////////////////////////
+    /////////// METHODS ///////////
+    ///////////////////////////////
+    
+    /**
+     * Play modal video
      * 
-     * @returns {undefined}
+     * @returns {void}
+     */
+    $scope.playVideo = function() {
+        
+        playerStatus.setSecFromStart(0);
+        playerStatus.setPlay(false);
+        playerStatus.setPause(false);
+        playerStatus.setStop(false);
+        
+        this.$broadcast(YT_event.PLAY);
+    }
+    
+    /**
+     * Stop modal video
+     * 
+     * @returns {void}
+     */
+    $scope.stopVideo = function() {
+        this.$broadcast(YT_event.STOP);
+    }
+    
+    /**
+     * Put item data into scope of the current modal
+     *  
+     * @returns {void}
      */
     $scope.setModalGraphic = function() {
         $scope.item = dataService.post;
     };
     
-    
     /**
+     * @deprecated
      * 
-     * @param {type} modal_sel
-     * @returns {undefined}
+     * @param {string} modal_sel
+     * @returns {void}
      */
     $scope.modalInfoHide = function(modal_sel) {
         
@@ -48,14 +98,13 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, auto
         });
         
         $('html, body').removeClass('noscroll');
-        
-        
     };
     
     /**
+     * Show comment, related and description draggable and resizable boxes
      * 
-     * @param {type} box
-     * @returns {undefined}
+     * @param {string} box
+     * @returns {void}
      */
     $scope.showBox = function(box) {
         $(box).css({'z-index': 1000});
@@ -96,9 +145,10 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, auto
     }
     
     /**
+     * Hide comment, related and description draggable and resizable boxes
      * 
-     * @param {type} box
-     * @returns {undefined}
+     * @param {string} box
+     * @returns {void}
      */
     $scope.hideBox = function(box) {
         $(box).fadeTo(100, 0, function() {
@@ -107,10 +157,11 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, auto
     }
     
     /**
+     * Give focus to the clicked box
      * 
-     * @param {type} target
-     * @param {type} other_boxes
-     * @returns {undefined}
+     * @param {string} target       selector clicked box
+     * @param {string} other_boxes  other opened boxes
+     * @returns {void}
      */
     $scope.focus = function(target, other_boxes) {
 
@@ -118,27 +169,18 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, auto
         $(target).css({'z-index': 1000});
     }
     
-    /*$scope.$watch(function() { return $scope.fixed }, function(newValue, oldValue) {
-        
-            if (newValue != oldValue) {
-                if (newValue) {
-                    $('nav').addClass('fixed-menu');
-                }
-                else {
-                    $('nav').removeClass('fixed-menu');
-                }
-            }
-        },true
-    );*/
-    
     /**
+     * Close the modal and open a floating box where a new player start playing
      * 
-     * @param {selector} box
+     * @param {string} box
      * @returns {void}
      */
-    $scope.pushpin = function(box) {
+    $scope.showFloating = function(box) {
         
-        $(box).fadeTo(200, 1).draggable();
+        $rootScope.$emit(MODAL_STATUS.STATUS_CHANGE, 'CLOSE', MODAL_STATUS.CLOSE);
+        this.$broadcast(YT_event.STOP);
+        
+        /*$(box).fadeTo(200, 1).draggable();
         
         if (utils.player['modal'] != null) {
             var videCurrentTime = utils.player['modal'].getCurrentTime();
@@ -148,46 +190,67 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, dataService, auto
         
         $('#myModal').modal('hide');
         
-        debug_console("videCurrentTime: " + videCurrentTime);
+        debug_console("videCurrentTime: " + videCurrentTime);*/
         
     };
     
-    /*
-    var promise;      
-    var holded = false;
-
-    $scope.mouseDown = function() {
-        promise = $interval(function () { 
-            holded = true;
-        }, 1000);
-    };
-
-    $scope.mouseUp = function () {
-        holded = false;
-        $interval.cancel(promise);
-    };
-    
-    $scope.$watch(function(){ return holded;}, function(newValue, oldValue) {
-        
-        if (newValue != oldValue) {
-            if (newValue) {
-                //hold
-                
-                
-            }
-            else {
-                //release
-                
-            }
-        }
-    },true);
-    */
 });
 
-app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interval){
-   /**
+app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element, dataService, playerStatus, YT_event, MODAL_STATUS){
+    
+    ////////////////////////////
+    /////////// VARS ///////////
+    ////////////////////////////
+    
+    $scope.YT_event = YT_event;
+    $scope.yt = {
+        playerStatus: 0
+    }
+    
+    //////////////////////////////
+    /////////// EVENTS ///////////
+    //////////////////////////////
+    
+    /**
+     * Listen for player status changes
+     */
+    $rootScope.$on(MODAL_STATUS.STATUS_CHANGE, function (status, data, code) {
+        if (code === MODAL_STATUS.CLOSE) {
+            $element.fadeTo(200, 1).draggable();
+            $scope.$broadcast(YT_event.PLAY);
+        }
+    });
+    
+    ///////////////////////////////
+    /////////// METHODS ///////////
+    ///////////////////////////////
+    
+    /**
+     * Play modal video
      * 
-     * @returns {undefined}
+     * @returns {void}
+     */
+    $scope.playVideo = function() {
+        playerStatus.setSecFromStart(0);
+        playerStatus.setPlay(false);
+        playerStatus.setPause(false);
+        playerStatus.setStop(false);
+        this.$broadcast(YT_event.PLAY);
+    }
+    
+    /**
+     * Stop modal video
+     * 
+     * @returns {void}
+     */
+    $scope.stopVideo = function() {
+        this.$broadcast(YT_event.STOP);
+    }
+    
+    /**
+     * Put item data into scope of the current floating box
+     * 
+     * @returns {void}
      */
     $scope.setFloatingGraphic = function() {
         $scope.item = dataService.post;
@@ -200,9 +263,11 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
      */
     $scope.pushpinHide = function(floating_sel) {
         
-        stopVideo('floating');
-        $('div#video-cont-floating').remove();
-        $(floating_sel).fadeTo(200, 0);
+        //stopVideo('floating');
+        $scope.stopVideo();
+        //$('div#video-cont-floating').remove();
+        //$(floating_sel).fadeTo(200, 0);
+        $element.fadeTo(200, 0);
     };
     
     /**
@@ -214,6 +279,8 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, dataService, $interva
      */
     $scope.returnModal = function(item, modal_sel, floating_sel) {
         
+        //TODO gestire il ritorno in modale con i secondi di riproduzione, utilizzare listener e il pulsante di ritorno come quello che apre la modale, dovrebbe funzionare
+        //TODO ci sono troppi todo
         
         var modal = $(modal_sel);
 

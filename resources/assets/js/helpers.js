@@ -133,8 +133,8 @@ function stopVideo(playerType){
     if (utils.player[playerType] !== null) {
 
         utils.player[playerType].stopVideo();
-        //utils.player[playerType].clearVideo();
-        //utils.player[playerType].destroy();
+        utils.player[playerType].clearVideo();
+        utils.player[playerType].destroy();
         
         //utils.player[playerType] = null;
         

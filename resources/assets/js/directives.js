@@ -126,8 +126,7 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
  * Github https://github.com/poxrud/youtube-directive-example/blob/master/application.js
  * Blog post http://blog.oxrud.com/posts/creating-youtube-directive/
  */
-app.directive('youtube', function($window, dataService, autoPlayer, YT_event){
-    
+app.directive('youtube', function($window, dataService, playerStatus, YT_event){
     
     return {
         restrict: "E",
@@ -147,62 +146,21 @@ app.directive('youtube', function($window, dataService, autoPlayer, YT_event){
 
             var player;
             
-            /*scope.$watch(function() { return autoPlayer.play }, function(value) {
-                if (value) {
-                    
-                    element.css({
-                        'width':'100%', 
-                        'height':'100%', 
-                        'padding-bottom':'inherit'
-                    });
-
-                    $window.onYouTubeIframeAPIReady = function() {
-                        player = new YT.Player(element.children()[0], {
-                            videoId: scope.videoid,
-                            playerVars: {
-                                'showinfo': 0,
-                                'modestbranding': 0,
-                                'rel': 0
-                            },
-                            events: {
-                                'onReady': function(event) {
-                                    
-                                },
-                                'onStateChange': function(event) {
-                                    var message = {
-                                        event: YT_event.STATUS_CHANGE,
-                                        data: ""
-                                    };
-
-                                    switch(event.data) {
-                                        case YT.PlayerState.PLAYING:
-                                            message.data = "PLAYING";
-                                            break;
-                                        case YT.PlayerState.ENDED:
-                                            message.data = "ENDED";
-                                            break;
-                                        case YT.PlayerState.UNSTARTED:
-                                            message.data = "NOT PLAYING";
-                                            break;
-                                        case YT.PlayerState.PAUSED:
-                                            message.data = "PAUSED";
-                                            break;
-                                    };
-                                    scope.$apply(function() {
-                                        scope.$emit(message.event, message.data);
-                                    });
-                                }
-                            }
-                        });
-                    };
-                    
-                    $window.onYouTubeIframeAPIReady();
-                }
-            });*/
-            
             scope.$on(YT_event.STOP, function () {
+                
+                playerStatus.setSecFromStart(player.getCurrentTime());
+                playerStatus.setStop(true);
+                
                 player.seekTo(0);
                 player.stopVideo();
+                player.clearVideo();
+                player.destroy();
+                
+                element.css({
+                    'width':'0', 
+                    'height':'0', 
+                    'padding-bottom':'inherit'
+                });
             });
 
             scope.$on(YT_event.PLAY, function () {
@@ -224,7 +182,12 @@ app.directive('youtube', function($window, dataService, autoPlayer, YT_event){
                         events: {
                             'onReady': function(event) {
                                 scope.$apply(function() {
+                                    if (playerStatus.getSecFromStart()>0) {
+                                        player.seekTo(playerStatus.getSecFromStart(), false);
+                                    }
                                     player.playVideo();
+                                    
+                                    playerStatus.setPlay(true);
                                 });
                             },
                             'onStateChange': function(event) {
@@ -262,6 +225,8 @@ app.directive('youtube', function($window, dataService, autoPlayer, YT_event){
 
             scope.$on(YT_event.PAUSE, function () {
                 player.pauseVideo();
+                
+                playerStatus.setPause(true);
             }); 
         }
     }
