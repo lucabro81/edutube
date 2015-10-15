@@ -1,4 +1,4 @@
-app.directive('isoRepeat', function ($timeout, dataService ) {
+app.directive('isoRepeat', function ($timeout, dataService, playerStatus) {
     return {
         scope: {
             items: '=isoRepeat'
@@ -25,13 +25,9 @@ app.directive('isoRepeat', function ($timeout, dataService ) {
 
             element.isotope(options);
 
-
-
             scope.$watch('items', function(newVal, oldVal){
                 $timeout(function(){
                     element.isotope( 'reloadItems' ).isotope({ sortBy: 'original-order' });
-
-
                 }, true);
             });
 
@@ -134,7 +130,9 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
         template: '<div style="width:100%; height:100%;"></div>',
         
         scope: {
-            videoid : '@'
+            videoid : '@',
+            //status : '@',
+            //stica:'=',
         },
 
         link: function(scope, element, attrs) {
@@ -144,17 +142,21 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
             var firstScriptTag = document.getElementsByTagName('script')[0];
             firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-            var player;
+            var player = null;
             
             scope.$on(YT_event.STOP, function () {
                 
-                playerStatus.setSecFromStart(player.getCurrentTime());
-                playerStatus.setStop(true);
+                if (player !== null) {
+                    playerStatus.setSecFromStart(player.getCurrentTime());
+                    playerStatus.setStop(true);
                 
-                player.seekTo(0);
-                player.stopVideo();
-                player.clearVideo();
-                player.destroy();
+                    attrs.$set('status',YT_event.ENDED);
+
+                    player.seekTo(0);
+                    player.stopVideo();
+                    player.clearVideo();
+                    player.destroy();
+                }
                 
                 element.css({
                     'width':'0', 
@@ -188,6 +190,8 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
                                     player.playVideo();
                                     
                                     playerStatus.setPlay(true);
+                                    
+                                    attrs.$set('status', YT_event.PLAYING);
                                 });
                             },
                             'onStateChange': function(event) {
@@ -196,6 +200,8 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
                                     data: "",
                                     code: event.data
                                 };
+                                
+                                attrs.$set('status', event.data);
                                 
                                 switch(event.data) {
                                     case YT.PlayerState.PLAYING:
@@ -212,6 +218,8 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
                                         break;
                                 };
                                 
+                                console.log(message);
+                                
                                 scope.$apply(function() {
                                     scope.$emit(message.event, message.data, message.code);
                                 });
@@ -226,6 +234,7 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
             scope.$on(YT_event.PAUSE, function () {
                 player.pauseVideo();
                 
+                attrs.$set('status', YT_event.PAUSED);
                 playerStatus.setPause(true);
             }); 
         }

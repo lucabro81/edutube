@@ -4,22 +4,23 @@ var app = angular.module('edutube', ['ngRoute', 'ngAnimate'], function($interpol
 });
 
 app.constant('YT_event', {
-    UNSTARTED       : 0,
-    ENDED           : 1,
-    PLAYING         : 2,
-    PAUSED          : 3,
-    BUFFERING       : 4,
+    UNSTARTED       : -1,
+    ENDED           : 0,
+    PLAYING         : 1,
+    PAUSED          : 2,
+    BUFFERING       : 3,
     VIDEO_CUED      : 5,
-    STATUS_CHANGE   : 6,
-    STOP            : 7, 
-    PLAY            : 8,
-    PAUSE           : 9
+    
+    STATUS_CHANGE   : 100,
+    STOP            : 101, 
+    PLAY            : 102,
+    PAUSE           : 103
 });
 
 app.constant('MODAL_STATUS', {
-    STATUS_CHANGE   : 0,
-    CLOSE           : 1,
-    OPEN            : 2
+    STATUS_CHANGE   : 200,
+    CLOSE           : 201,
+    OPEN            : 202
 });
 
 /*app.run(function(){

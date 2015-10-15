@@ -3,7 +3,7 @@
     
     <div class="header bg-{??item.categories[0].slug??} text-right clearfix">
         <div class="pull-right" style="position: relative;">
-            <button class="btn simple-button" ng-click="pushpinHide('#floating_player')"><i class="glyphicon glyphicon-remove"></i></button>
+            <button class="btn simple-button" ng-click="pushpinHide()"><i class="glyphicon glyphicon-remove"></i></button>
         </div>
         
         <div class="pull-right" style="position: relative;">
@@ -14,7 +14,7 @@
             <button class="btn simple-button" 
                     data-toggle="modal" 
                     data-target="#myModal"
-                    ng-click="returnModal(item, '.modal-info-video', '#floating_player')"><i class="glyphicon glyphicon-resize-full"></i></button>
+                    ng-click="showModal()"><i class="glyphicon glyphicon-resize-full"></i></button>
         </div>
     </div>
     

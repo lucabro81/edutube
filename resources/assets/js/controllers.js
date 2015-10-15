@@ -22,7 +22,7 @@ app.controller('ItemsCtrl', function ItemsCtrl($scope, $timeout, dataService) {
 /**
  * Controller for main player modal window
  */
-app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataService, playerStatus, YT_event, MODAL_STATUS){
+app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $element, $rootScope, dataService, playerStatus, YT_event, MODAL_STATUS){
     
     ////////////////////////////
     /////////// VARS ///////////
@@ -30,7 +30,7 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
     
     $scope.YT_event = YT_event;
     $scope.yt = {
-        playerStatus: 0
+        playerStatus: YT_event.UNSTARTED
     }
     
     //////////////////////////////
@@ -41,8 +41,31 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
      * Listen for player status changes
      */
     $scope.$on(YT_event.STATUS_CHANGE, function (event, data, code) {
-        console.log(code);
-        $scope.yt.playerStatus = code;
+        //$scope.yt.playerStatus = code;
+        switch (code) {
+            case YT_event.UNSTARTED:
+                playerStatus.setUnstart(true);
+                break;
+            case YT_event.PLAYING:
+                playerStatus.setPlay(true);
+                break;
+            case YT_event.PAUSED:
+                playerStatus.setPause(true);
+                break;
+            case YT_event.ENDED:
+                playerStatus.setStop(true);
+                break;
+        }
+    });
+    
+    /**
+     * Listen for the modal OPEN
+     */
+    $rootScope.$on(MODAL_STATUS.OPEN, function (status, data) {
+        $element.fadeTo(200, 1).draggable();
+        if (!playerStatus.isUnstarted()) {
+            $scope.$broadcast(YT_event.PLAY);
+        }
     });
     
     ///////////////////////////////
@@ -56,12 +79,10 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
      */
     $scope.playVideo = function() {
         
-        playerStatus.setSecFromStart(0);
-        playerStatus.setPlay(false);
-        playerStatus.setPause(false);
-        playerStatus.setStop(false);
+        playerStatus.setUnstart(true);
         
         this.$broadcast(YT_event.PLAY);
+        //$scope.yt.playerStatus = YT_event.PLAY;
     }
     
     /**
@@ -70,7 +91,10 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
      * @returns {void}
      */
     $scope.stopVideo = function() {
-        this.$broadcast(YT_event.STOP);
+        
+        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+            this.$broadcast(YT_event.STOP);
+        }
     }
     
     /**
@@ -79,6 +103,9 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
      * @returns {void}
      */
     $scope.setModalGraphic = function() {
+        //playerStatus.setUnstart(true);
+        //$scope.yt.playerStatus = YT_event.ENDED;
+        $scope.stopVideo();
         $scope.item = dataService.post;
     };
     
@@ -112,28 +139,11 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
         
         var widthModalDialog = $('.modal-dialog').width();
         
-        console.log(widthModalDialog);
-        
         $(box).draggable({
             containment: "parent",
             snap: "#myModal",
             stop: function(event, ui) {
                 
-                /*var positionRightDraggableBox = $(window).width()-(ui.position.left + $(box).width());
-                
-                
-                if (positionRightDraggableBox <= 30) {
-                    $('.modal-dialog').css({
-                        'width': (widthModalDialog - $(box).width() - 30) + 'px',
-                        'margin' : '0 auto 0 0'
-                    });
-                }
-                else {
-                    $('.modal-dialog').css({
-                        'width': '100%',
-                        'margin' : '0 auto'
-                    });
-                }*/
             }
         });
         $(box).resizable({
@@ -164,7 +174,6 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
      * @returns {void}
      */
     $scope.focus = function(target, other_boxes) {
-
         $(other_boxes).css({'z-index': 999});
         $(target).css({'z-index': 1000});
     }
@@ -176,22 +185,10 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $rootScope, dataS
      * @returns {void}
      */
     $scope.showFloating = function(box) {
-        
-        $rootScope.$emit(MODAL_STATUS.STATUS_CHANGE, 'CLOSE', MODAL_STATUS.CLOSE);
-        this.$broadcast(YT_event.STOP);
-        
-        /*$(box).fadeTo(200, 1).draggable();
-        
-        if (utils.player['modal'] != null) {
-            var videCurrentTime = utils.player['modal'].getCurrentTime();
-            playerManageHelper($('#play-video-floating'), 'video-cont-floating', 'floating', videCurrentTime);
-            $('#floating_player').attr('ng-statuslistener', utils.player['floating'].getPlayerState());
+        $rootScope.$emit(MODAL_STATUS.CLOSE, 'CLOSE');
+        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+            this.$broadcast(YT_event.STOP);
         }
-        
-        $('#myModal').modal('hide');
-        
-        debug_console("videCurrentTime: " + videCurrentTime);*/
-        
     };
     
 });
@@ -204,7 +201,7 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
     
     $scope.YT_event = YT_event;
     $scope.yt = {
-        playerStatus: 0
+        playerStatus: YT_event.UNSTARTED
     }
     
     //////////////////////////////
@@ -214,9 +211,30 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
     /**
      * Listen for player status changes
      */
-    $rootScope.$on(MODAL_STATUS.STATUS_CHANGE, function (status, data, code) {
-        if (code === MODAL_STATUS.CLOSE) {
-            $element.fadeTo(200, 1).draggable();
+    $scope.$on(YT_event.STATUS_CHANGE, function (event, data, code) {
+        switch (code) {
+            case YT_event.UNSTARTED:
+                playerStatus.setUnstart(true);
+                break;
+            case YT_event.PLAYING:
+                playerStatus.setPlay(true);
+                break;
+            case YT_event.PAUSED:
+                playerStatus.setPause(true);
+                break;
+            case YT_event.ENDED:
+                playerStatus.setStop(true);
+                break;
+        }
+    });
+    
+    /**
+     * Listen for the modal status changes
+     */
+    $rootScope.$on(MODAL_STATUS.CLOSE, function (status, data) {
+        $element.fadeTo(200, 1).draggable();
+        
+        if (playerStatus.isPlaying()) {
             $scope.$broadcast(YT_event.PLAY);
         }
     });
@@ -231,10 +249,7 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
      * @returns {void}
      */
     $scope.playVideo = function() {
-        playerStatus.setSecFromStart(0);
-        playerStatus.setPlay(false);
-        playerStatus.setPause(false);
-        playerStatus.setStop(false);
+        playerStatus.setUnstart(true);
         this.$broadcast(YT_event.PLAY);
     }
     
@@ -244,7 +259,9 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
      * @returns {void}
      */
     $scope.stopVideo = function() {
-        this.$broadcast(YT_event.STOP);
+        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+            this.$broadcast(YT_event.STOP);
+        }
     }
     
     /**
@@ -253,6 +270,8 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
      * @returns {void}
      */
     $scope.setFloatingGraphic = function() {
+        $scope.pushpinHide();
+        playerStatus.setUnstart(true);
         $scope.item = dataService.post;
     }; 
     
@@ -261,95 +280,27 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
      * @param {type} floating_sel
      * @returns {undefined}
      */
-    $scope.pushpinHide = function(floating_sel) {
-        
-        //stopVideo('floating');
+    $scope.pushpinHide = function() {
         $scope.stopVideo();
-        //$('div#video-cont-floating').remove();
-        //$(floating_sel).fadeTo(200, 0);
         $element.fadeTo(200, 0);
     };
     
     /**
      * 
-     * @param {type} item
-     * @param {type} modal_sel
-     * @param {type} floating_sel
      * @returns {undefined}
      */
-    $scope.returnModal = function(item, modal_sel, floating_sel) {
-        
-        //TODO gestire il ritorno in modale con i secondi di riproduzione, utilizzare listener e il pulsante di ritorno come quello che apre la modale, dovrebbe funzionare
-        //TODO ci sono troppi todo
-        
-        var modal = $(modal_sel);
-
-        $('.modal-dialog').css({
-            //'margin': '0 auto',
-            'width': '100%',
-            'height': '100%',
-        });
-        $('.draggable-box').attr('style', '');
-
-        $('.modal-dialog').draggable({
-            containment: "parent",
-            snap: "#myModal",
-            stop: function(event, ui) {
-            }
-        });
-        
-        // TODO: ora che c'è la direttiva funcionante tutta questa parte può essere sbrigata dal template
-        //var title            = item.title;
-        var mediafiles       = item.mediafiles;
-        var img_header       = modal.find('#img-prev-video');
-
-        // si cerca l'ultimo file che dovrebbe essere il più grande possible
-        // TODO: da verificare
-        $.each(mediafiles, function(i, obj) {
-            utils.biggerMediafiles = obj;
-        });
-
-        img_header.attr('src', utils.biggerMediafiles.url);
-        img_header.one('load', function () {
-
-            var height = (modal.find('.img-video').width()/16)*9;
-            var total_height = height + $('.video-info-modal ').outerHeight() + $('.dati-video').outerHeight() + $('.header').outerHeight() + 60;
-
-            if (total_height > $(window).height()) {
-                height = height - (total_height-$(window).height());
-            }
-
-            //modal.find('.img-video').css({'height':height+'px'})
-            modal.find('.img-video').css({
-                'height': '100%', 
-                'padding-bottom': $('.video-info-modal').outerHeight() + 'px'
-            });
-            img_header.css(resizeImage(utils.biggerMediafiles.width, utils.biggerMediafiles.height, modal.find('.img-video')));
-
-            //TODO: inserire spinner
-            //TODO: vedere se si riesce a sistemare la transizione fade
-
-        });
-        
-        if (utils.player['floating'] != null) {
-            var videCurrentTime = utils.player['floating'].getCurrentTime();
-            playerManageHelper($('#play-video'), 'video-cont', 'modal', videCurrentTime);
-            $('#myModal').attr('ng-statuslistener', utils.player['modal'].getPlayerState());
+    $scope.showModal = function() {
+        $scope.pushpinHide();
+        $rootScope.$emit(MODAL_STATUS.OPEN, 'OPEN');
+        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+            this.$broadcast(YT_event.STOP);
         }
-        
-        $scope.pushpinHide(floating_sel);
     }
-    
-    /*
-    
-    $scope.$watch(function() { return $scope.element }, function(newValue, oldValue) {
-        },true
-    );*/
 });
 
 /**
  * 
- */
+ 
 app.controller('menuCtrl', function menuCtrl($scope, $window) {
     
     // conservare
@@ -364,9 +315,9 @@ app.controller('menuCtrl', function menuCtrl($scope, $window) {
                 }
             }
         },true
-    );/**/
+    );
     
-});
+});*/
 
 app.controller('YouTubeCtrl', function YouTubeCtrl($scope, YT_event) {
     $scope.YT_event = YT_event;
