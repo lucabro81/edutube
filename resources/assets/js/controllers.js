@@ -43,14 +43,24 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $element, $rootSc
     $scope.$on(YT_event.STATUS_CHANGE, function (event, data, code) {
         //$scope.yt.playerStatus = code;
         switch (code) {
+            case YT_event.LOADING:
+                playerStatus.setLoaded(true);
+                break;
             case YT_event.UNSTARTED:
                 playerStatus.setUnstart(true);
                 break;
             case YT_event.PLAYING:
+                
+                
+                
                 playerStatus.setPlay(true);
+                
                 break;
             case YT_event.PAUSED:
                 playerStatus.setPause(true);
+                break;
+            case YT_event.BUFFERING:
+                playerStatus.setBuffering(true);
                 break;
             case YT_event.ENDED:
                 playerStatus.setStop(true);
@@ -79,7 +89,8 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $element, $rootSc
      */
     $scope.playVideo = function() {
         
-        playerStatus.setUnstart(true);
+        //playerStatus.setUnstart(true);
+        playerStatus.setLoaded(true);
         
         this.$broadcast(YT_event.PLAY);
         //$scope.yt.playerStatus = YT_event.PLAY;
@@ -92,7 +103,11 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $element, $rootSc
      */
     $scope.stopVideo = function() {
         
-        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+        if (playerStatus.isPlaying() || 
+            playerStatus.isPaused() || 
+            playerStatus.isBuffering() || 
+            playerStatus.isLoading()) {
+        
             this.$broadcast(YT_event.STOP);
         }
     }
@@ -186,9 +201,19 @@ app.controller('modalInfoCtrl', function modalInfoCtrl($scope, $element, $rootSc
      */
     $scope.showFloating = function(box) {
         $rootScope.$emit(MODAL_STATUS.CLOSE, 'CLOSE');
-        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+        
+        console.log("buffering: " + playerStatus.isBuffering());
+        
+        /*$scope.$watch(function() { return playerStatus }, function(value) {
+            if (playerStatus.isPlaying() || playerStatus.isPaused() || playerStatus.isBuffering()) {
+                this.$broadcast(YT_event.STOP);
+            }
+        })*/
+        
+        if (playerStatus.isPlaying() || playerStatus.isPaused() || playerStatus.isBuffering()) {
             this.$broadcast(YT_event.STOP);
         }
+        
     };
     
 });
@@ -221,6 +246,9 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
                 break;
             case YT_event.PAUSED:
                 playerStatus.setPause(true);
+                break;
+            case YT_event.BUFFERING:
+                playerStatus.setBuffering(true);
                 break;
             case YT_event.ENDED:
                 playerStatus.setStop(true);
@@ -292,7 +320,8 @@ app.controller('pushpinCtrl', function pushpinCtrl($scope, $rootScope, $element,
     $scope.showModal = function() {
         $scope.pushpinHide();
         $rootScope.$emit(MODAL_STATUS.OPEN, 'OPEN');
-        if (playerStatus.isPlaying() || playerStatus.isPaused()) {
+        
+        if (playerStatus.isPlaying() || playerStatus.isPaused() || playerStatus.isBuffering()) {
             this.$broadcast(YT_event.STOP);
         }
     }

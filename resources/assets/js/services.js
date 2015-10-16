@@ -27,6 +27,7 @@ app.service('playerStatus', function() {
     var stopped      = false;
     var unstarted    = true;
     var buffered     = false;
+    var loaded       = false;
     
     return {
         /**
@@ -64,6 +65,7 @@ app.service('playerStatus', function() {
                 this.setStop(false);
                 this.setUnstart(false);
                 this.setBuffering(false);
+                this.setLoaded(true);
             }
         },
         
@@ -86,6 +88,7 @@ app.service('playerStatus', function() {
                 this.setStop(false);
                 this.setUnstart(false);
                 this.setBuffering(false);
+                this.setLoaded(true);
             }
         },
         
@@ -108,6 +111,7 @@ app.service('playerStatus', function() {
                 this.setPause(false);
                 this.setUnstart(false);
                 this.setBuffering(false);
+                this.setLoaded(true);
             }
         },
         
@@ -131,6 +135,7 @@ app.service('playerStatus', function() {
                 this.setPause(false);
                 this.setStop(false);
                 this.setBuffering(false);
+                this.setLoaded(true);
             }
         },
         
@@ -154,6 +159,31 @@ app.service('playerStatus', function() {
                 this.setPause(false);
                 this.setStop(false);
                 this.setUnstart(false);
+                this.setLoaded(true);
+            }
+        },
+        
+        /**
+         * 
+         * @returns {loaded|Boolean}
+         */
+        isLoading : function() {
+            return loaded;
+        },
+        /**
+         * 
+         * @param {boolean} load
+         * @returns {void}
+         */
+        setLoaded : function(load) {
+            loaded = load;
+            if (loaded) {
+                secFromStart = 0;
+                this.setPlay(false);
+                this.setPause(false);
+                this.setStop(false);
+                this.setUnstart(false);
+                this.setBuffering(false);
             }
         }
     }

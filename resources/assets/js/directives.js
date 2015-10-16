@@ -146,16 +146,25 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
             
             scope.$on(YT_event.STOP, function () {
                 
-                if (player !== null) {
-                    playerStatus.setSecFromStart(player.getCurrentTime());
-                    playerStatus.setStop(true);
+                /*if (playerStatus.isLoading()) {
+                    player = null;
+                }*/
                 
-                    attrs.$set('status',YT_event.ENDED);
+                playerStatus.setStop(true);
 
-                    player.seekTo(0);
-                    player.stopVideo();
-                    player.clearVideo();
-                    player.destroy();
+                attrs.$set('status',YT_event.ENDED);
+                
+                console.log(playerStatus.isLoading());
+                
+                if (!playerStatus.isLoading()) {
+                    if (player !== null) {
+                        playerStatus.setSecFromStart(player.getCurrentTime());
+                
+                        player.seekTo(0);
+                        player.stopVideo();
+                        player.clearVideo();
+                        player.destroy();
+                    }
                 }
                 
                 element.css({
@@ -189,9 +198,20 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
                                     }
                                     player.playVideo();
                                     
-                                    playerStatus.setPlay(true);
+                                    console.log(playerStatus.isStopped())
                                     
-                                    attrs.$set('status', YT_event.PLAYING);
+                                    if (playerStatus.isStopped()) {
+                                        player.seekTo(0);
+                                        player.stopVideo();
+                                        player.clearVideo();
+                                        player.destroy();
+                                        
+                                    }
+                                    else {
+                                        playerStatus.setPlay(true);
+                                        attrs.$set('status', YT_event.PLAYING);
+                                    }
+                                    
                                 });
                             },
                             'onStateChange': function(event) {
@@ -212,6 +232,9 @@ app.directive('youtube', function($window, dataService, playerStatus, YT_event){
                                         break;
                                     case YT.PlayerState.UNSTARTED:
                                         message.data = "NOT PLAYING";
+                                        break;
+                                    case YT.PlayerState.BUFFERING:
+                                        message.data = "BUFFERING";
                                         break;
                                     case YT.PlayerState.PAUSED:
                                         message.data = "PAUSED";

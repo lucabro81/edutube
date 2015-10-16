@@ -4,6 +4,7 @@ var app = angular.module('edutube', ['ngRoute', 'ngAnimate'], function($interpol
 });
 
 app.constant('YT_event', {
+    LOADING         : -2,
     UNSTARTED       : -1,
     ENDED           : 0,
     PLAYING         : 1,
