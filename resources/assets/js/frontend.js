@@ -6,10 +6,7 @@ $(window).on('resize', function(){
 });
 
 $(document).ready(function(){
-    // HANDLERS
-
-    
-
+        
     /**
      * 
      * @returns {undefined}
@@ -48,7 +45,7 @@ $(document).ready(function(){
     // LISTENERS
     
     $(document).on('hidden.bs.modal', '#myModal', dismissModal);
-    $(document).on('click', '#play-video', playerManage);
-    $(document).on('click', '#play-video-floating', playerManageFloating);
+    //$(document).on('click', '#play-video', playerManage);
+    //$(document).on('click', '#play-video-floating', playerManageFloating);
     $(document).on('mousemove mouseenter', mousePosition);
 });

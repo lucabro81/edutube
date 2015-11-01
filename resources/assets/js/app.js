@@ -24,6 +24,10 @@ app.constant('MODAL_STATUS', {
     OPEN            : 202
 });
 
+app.constant('QUEUE_event', {
+    ADD : 300
+})
+
 /*app.run(function(){
     
 });

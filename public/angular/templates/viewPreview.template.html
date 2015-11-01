@@ -1,4 +1,4 @@
-<div class="video-prev" id = "video-prev-{{ item.id }}" ng-repeat="item in items" ng-hover>
+<div class="video-prev" id = "video-prev-{{ item.id }}" ng-repeat="item in items" jn-hover jn-slide-hidden-element>
     
     <img ng-src="{{ item.mediafiles | imgByName: 'thubnail_medium' }}"> 
     
@@ -15,7 +15,7 @@
                 <li><a href="#"><i class="glyphicon glyphicon-plus"></i>&nbsp;&nbsp;&nbsp;Aggingi a Playlist</a></li>
             </ul>&nbsp;&nbsp;
         </div>
-        <button class="btn simple-button" ng-addqueue='{"queueCont": ".queue-box", "id": "{{item.YT_id}}"}'><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+        <button class="btn simple-button" ng-click="addVideoToQueue(item)"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
         <button class="btn simple-button"><i class="glyphicon glyphicon-flag"></i></button>&nbsp;&nbsp;
     </div>
 

@@ -1,9 +1,18 @@
 /**
- * Permette di passare i dati tra la griglia e la modale e tra la modale e la floating
+ * Permette di passare i dati tra la griglia e la modale e tra la modale e la floating.
+ * Permette di getire una coda di post in attesa di gestione
  */
 app.service('dataService', function ($http) {
     return {
-        get: function () {
+        post: null,
+        queue: [],
+        current: 0,
+        
+        /**
+         * 
+         * @returns {Object}
+         */
+        getPosts: function () {
             var promise = $http
                 .get(baseUrl() + 'api/posts')
                 .then(function (resp) {
@@ -11,7 +20,136 @@ app.service('dataService', function ($http) {
                 });
             return promise;
         },
-        post: null 
+        
+        /**
+         * 
+         * @param {Object} post
+         * @returns {void}
+         */
+        setPost: function (post) {
+            this.post = post;
+        },
+        /**
+         * 
+         * @returns {Object}
+         */
+        getPost: function () {
+            return this.post;
+        },
+        
+        /**
+         * 
+         * @returns {void}
+         */
+        iniPostQueue: function() {
+            this.queue = [];
+        },
+        /**
+         * 
+         * @param {Object} item
+         * @returns {void}
+         */
+        pushPostToQueue: function(item) {
+            this.queue.push(item);
+        },
+        /**
+         * 
+         * @returns {Object}
+         */
+        popPostToQueue: function() {
+            return this.queue.pop();
+        },
+        /**
+         * 
+         * @returns {int}
+         */
+        getQueueDim: function() {
+            return this.queue.length;
+        },
+        /**
+         * 
+         * @param {int} index
+         * @returns {Object}
+         */
+        getPostAtIndex: function(index) {
+            this.current = index;
+            return this.queue[index];
+        },
+        /**
+         * 
+         * @returns {Array}
+         */
+        getQueue: function() {
+            return this.queue;
+        },
+        /**
+         * 
+         * @returns {int}
+         */
+        getCurrentIndex: function() {
+            return this.current
+        },
+        /**
+         * 
+         * @returns {Object}
+         */
+        getCurrentPost: function() {
+            return this.queue[this.current];
+        },
+        /**
+         * 
+         * @returns {Object}
+         */
+        getCurrentPostAndNext: function() {
+            var post = this.queue[this.current];
+            if ((this.current+1) < (this.getQueueDim()-1)) {
+                this.current += 1;
+            }
+            return post;
+        },
+        /**
+         * 
+         * @returns {Object}
+         */
+        getCurrentPostAndPrev: function() {
+            var post = this.queue[this.current];
+            if ((this.current-1) > 0) {
+                this.current -= 1;
+            }
+            return post;
+        },
+        /**
+         * 
+         * @returns {Object|Boolean}
+         */
+        nextPost: function() {
+            if ((this.current+1) > (this.getQueueDim()-1)) {
+                return false;
+            }
+            
+            this.current += 1;
+            return this.queue[this.current];
+        },
+        /**
+         * 
+         * @returns {Object|Boolean}
+         */
+        prevPost: function() {
+            if ((this.current-1) < 0) {
+                return false;
+            }
+            
+            this.current -= 1;
+            return this.queue[this.current];
+        },
+        /**
+         * 
+         */
+        printStatus : function() {
+            console.log("Queue: " + this.queue);
+            console.log("Current: " + this.queue[this.current]);
+            console.log("Current key: " + this.current);
+        }
     };
 });
 
@@ -19,23 +157,23 @@ app.service('dataService', function ($http) {
  * Da utilizzare per comunicare lo stato del player tra la modale la floating ed eventualmente altri controller.
  * In questo modo la floating può eventualmente partire da dove ha finito la modale
  */
+
 app.service('playerStatus', function() {
-    
-    var secFromStart = 0;
-    var playing      = false;
-    var paused       = false;
-    var stopped      = false;
-    var unstarted    = true;
-    var buffered     = false;
-    var loaded       = false;
-    
     return {
+        secFromStart : 0,
+        playing      : false,
+        paused       : false,
+        stopped      : false,
+        unstarted    : true,
+        buffering    : false,
+        loading      : false,
+        
         /**
          * 
          * @returns {sec|Number}
          */
         getSecFromStart : function() {
-            return secFromStart;
+            return this.secFromStart;
         },
         /**
          * 
@@ -43,7 +181,7 @@ app.service('playerStatus', function() {
          * @returns {void}
          */
         setSecFromStart : function(sec) {
-            secFromStart = sec;
+            this.secFromStart = sec;
         },
         
         /**
@@ -51,7 +189,7 @@ app.service('playerStatus', function() {
          * @returns {play|Boolean}
          */
         isPlaying : function() {
-            return playing;
+            return this.playing;
         },
         /**
          * 
@@ -59,13 +197,13 @@ app.service('playerStatus', function() {
          * @returns {void}
          */
         setPlay : function(play) {
-            playing = play;
-            if (playing) {
-                this.setPause(false);
-                this.setStop(false);
-                this.setUnstart(false);
-                this.setBuffering(false);
-                this.setLoaded(true);
+            this.playing = play;
+            if (this.playing) {
+                this.paused = false;
+                this.stopped = false;
+                this.unstarted = false;
+                this.buffering = false;
+                this.loading = false;
             }
         },
         
@@ -74,7 +212,7 @@ app.service('playerStatus', function() {
          * @returns {Boolean|pause}
          */
         isPaused : function() {
-            return paused;
+            return this.paused;
         },
         /**
          * 
@@ -82,13 +220,13 @@ app.service('playerStatus', function() {
          * @returns {void}
          */
         setPause : function(pause) {
-            paused = pause;
-            if (paused) {
-                this.setPlay(false);
-                this.setStop(false);
-                this.setUnstart(false);
-                this.setBuffering(false);
-                this.setLoaded(true);
+            this.paused = pause;
+            if (this.paused) {
+                this.playing = false;
+                this.stopped = false;
+                this.unstarted = false;
+                this.buffering = false;
+                this.loading = false;
             }
         },
         
@@ -97,7 +235,7 @@ app.service('playerStatus', function() {
          * @returns {stop|Boolean}
          */
         isStopped : function() {
-            return stopped;
+            return this.stopped;
         },
         /**
          * 
@@ -105,13 +243,13 @@ app.service('playerStatus', function() {
          * @returns {void}
          */
         setStop : function(stop) {
-            stopped = stop;
-            if (stopped) {
-                this.setPlay(false);
-                this.setPause(false);
-                this.setUnstart(false);
-                this.setBuffering(false);
-                this.setLoaded(true);
+            this.stopped = stop;
+            if (this.stopped) {
+                this.playing = false;
+                this.paused = false;
+                this.unstarted = false;
+                this.buffering = false;
+                this.loading = false;
             }
         },
         
@@ -120,7 +258,7 @@ app.service('playerStatus', function() {
          * @returns {unstart|Boolean}
          */
         isUnstarted : function() {
-            return unstarted;
+            return this.unstarted;
         },
         /**
          * 
@@ -128,14 +266,14 @@ app.service('playerStatus', function() {
          * @returns {void}
          */
         setUnstart : function(unstart) {
-            unstarted = unstart;
-            if (unstarted) {
-                secFromStart = 0;
-                this.setPlay(false);
-                this.setPause(false);
-                this.setStop(false);
-                this.setBuffering(false);
-                this.setLoaded(true);
+            this.unstarted = unstart;
+            if (this.unstarted) {
+                this.secFromStart = 0;
+                this.playing = false;
+                this.paused = false;
+                this.stopped = false;
+                this.buffering = false;
+                this.loading = false;
             }
         },
         
@@ -144,7 +282,7 @@ app.service('playerStatus', function() {
          * @returns {buffering|Boolean}
          */
         isBuffering : function() {
-            return buffered;
+            return this.buffering;
         },
         /**
          * 
@@ -152,14 +290,14 @@ app.service('playerStatus', function() {
          * @returns {void}
          */
         setBuffering : function(buffering) {
-            buffered = buffering;
-            if (buffered) {
-                secFromStart = 0;
-                this.setPlay(false);
-                this.setPause(false);
-                this.setStop(false);
-                this.setUnstart(false);
-                this.setLoaded(true);
+            this.buffering = buffering;
+            if (this.buffering) {
+                this.secFromStart = 0;
+                this.loading = false;
+                this.playing = false;
+                this.paused = false;
+                this.stopped = false;
+                this.unstarted = false;
             }
         },
         
@@ -168,23 +306,36 @@ app.service('playerStatus', function() {
          * @returns {loaded|Boolean}
          */
         isLoading : function() {
-            return loaded;
+            return this.loading;
         },
         /**
          * 
          * @param {boolean} load
          * @returns {void}
          */
-        setLoaded : function(load) {
-            loaded = load;
-            if (loaded) {
-                secFromStart = 0;
-                this.setPlay(false);
-                this.setPause(false);
-                this.setStop(false);
-                this.setUnstart(false);
-                this.setBuffering(false);
+        setLoading : function(load) {
+            this.loading = load;
+            if (this.loading) {
+                this.secFromStart = 0;
+                this.playing = false;
+                this.paused = false;
+                this.stopped = false;
+                this.unstarted = false;
+                this.buffering = false;
             }
+        },
+        
+        /**
+         * 
+         */
+        printStatus : function() {
+            console.log("secFromStart: " + this.getSecFromStart());
+            console.log("playing: " + this.isPlaying());
+            console.log("paused: " + this.isPaused());
+            console.log("stopped: " + this.isStopped());
+            console.log("unstarted: " + this.isUnstarted());
+            console.log("buffering: " + this.isBuffering());
+            console.log("loading: " + this.isLoading());
         }
     }
 })

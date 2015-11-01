@@ -179,3 +179,15 @@ function playerManageHelper(playButton, idVideoCont, playerType, start) {
     });/**/
 
 }
+
+/*function addVideoToQueue(queueBox) {
+        var weight = $(queueBox).find('div').length;
+            
+        console.log($(queueBox).find('div').length);
+            
+        $('#play-video-floating').attr('data-videoid', $scope.item.YT_id);
+        $('#play-video').attr('data-videoid', $scope.item.YT_id);
+
+        $(queueBox).append('<div id="'+$scope.item.YT_id+'" data-status="-1" data-weight="' + weight + '"></div>');
+    }
+}*/

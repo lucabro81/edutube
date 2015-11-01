@@ -4,6 +4,10 @@
 <head>
     <!--link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"-->
     <!--link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"-->
+    
+    {!!Html::style('angular_slick/slick-carousel/slick/slick.css')!!}
+    {!!Html::style('angular_slick/slick-carousel/slick/slick-theme.css')!!}
+    
     {!!Html::style('css/app.min.css')!!}
     
     {!!GW::google_js()!!}
@@ -122,11 +126,14 @@
     {!!Html::script('js/bootstrap.js')!!}
     
     {!!Html::script('angular/angular.js')!!}
+    {!!Html::script('angular_slick/slick-carousel/slick/slick.js')!!}
+    {!!Html::script('angular_slick/angular-slick/dist/slick.js')!!}
     {!!Html::script('angular/angular-route.js')!!}
     {!!Html::script('angular/angular-animate.js')!!}
-    {!!Html::script('angular/sticky.js')!!}
     
     {!!Html::script('js/isotope.pkgd.min.js')!!}
+    
+    
     {!!Html::script('js/app.min.js')!!}
     {!!Html::script('js/fit-columns.js')!!}
     @yield('js_aggiuntivi')

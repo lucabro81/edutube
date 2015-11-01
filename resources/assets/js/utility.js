@@ -46,7 +46,7 @@ function errorResponse(xhr, status, error) {
  * @param {int} height_img
  * @param {jQuery} container
  * @returns {Object}
- */
+ 
 function resizeImage(width_img, height_img, container) {
     
     var new_h_img_width_cont = (height_img/width_img)*container.width();
@@ -70,7 +70,7 @@ function resizeImage(width_img, height_img, container) {
     }
 
     return css;
-};
+};*/
 
 /**
  * Ritorna la distanza dal bordo top della finestra dell'elemento passato

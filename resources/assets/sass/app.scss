@@ -758,19 +758,32 @@ youtube {
     bottom:0px; 
     width:100%; 
     z-index:1000;
+    background-color: #000000;
     
     #handle-queue-box {
         color: #ffffff;
         display:block; 
         margin:0 auto; 
+        z-index:10;
         margin-top: -14px;
+        
+    }
+    
+    #queue-box-cont {
+        z-index:0;
+        @include box-shadow(null, 0, 0, 100px, 30px, rgba(0,0,0,0.5));
+        p.messaggio {
+            width:100%;
+            text-align: center;
+            color:#ffffff;
+            padding:20px;
+            margin:0px;
+        }
     }
 }
 
-
-
 .trapezoid {
-    border-bottom: 14px solid #000000;
+    border-bottom: 14px #000000 solid;
     border-left: 14px solid transparent;
     border-right: 14px solid transparent;
     height: 0;

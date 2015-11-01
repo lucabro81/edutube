@@ -1,5 +1,5 @@
 
-<div id="floating_player" class="video-prev" ng-controller="pushpinCtrl" ng-onshow ng-hoverfloating ng-statuslistener="-1">
+<div id="floating_player" class="video-prev" ng-controller="pushpinCtrl" jn-on-show-floating jn-hover-floating>
     
     <div class="header bg-{??item.categories[0].slug??} text-right clearfix">
         <div class="pull-right" style="position: relative;">
@@ -7,7 +7,7 @@
         </div>
         
         <div class="pull-right" style="position: relative;">
-            <button class="btn simple-button" ng-addqueue><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+            <button class="btn simple-button" ng-click="addVideoToQueue()"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
         </div>
         
         <div class="pull-left" >
@@ -20,9 +20,10 @@
     
     <div class="img-prev-container" style="position: relative;">
         <img ng-src="{??item.mediafiles | imgByName: 'thubnail_medium'??}"> 
-        <button id ="play-video-floating" data-videoid = "{??item.YT_id??}" class="simple-button" >
+        <button id ="play-video-floating" class="simple-button" ng-click="playVideo()">
             <span class="glyphicon glyphicon-play" aria-hidden="true"></span>
         </button>
+        <!--youtube videoid="item.YT_id" status = "{??yt.playerStatus??}"></youtube-->
         <youtube videoid="{??item.YT_id??}" status = "{??yt.playerStatus??}"></youtube>
     </div>
     
@@ -33,7 +34,7 @@
     </div>
 </div> 
 
-<div id="myModal" class="modal modal-info-video" data-open = "false" ng-controller="modalInfoCtrl" ng-onshow ng-statuslistener>
+<div id="myModal" class="modal modal-info-video" data-open = "false" ng-controller="modalInfoCtrl" jn-on-show-modal>
 
     <div class = "modal-dialog modal-dialog-info-video" id = "video-info-0">
         <div class = "modal-content-info-video">
@@ -56,11 +57,11 @@
                 </div>
                 
                 <div class="pull-left" >
-                    <button class="btn simple-button" data-dismiss="modal"><i class="glyphicon glyphicon-resize-small" ng-click="showFloating('#floating_player')"></i></button>
+                    <button class="btn simple-button" data-dismiss="modal"><i class="glyphicon glyphicon-resize-small" ng-click="showFloating()"></i></button>
                 </div>
                 
                 <div class="pull-right" style="position: relative;">
-                    <button class="btn simple-button" ng-addqueue><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
+                    <button class="btn simple-button" ng-click="addVideoToQueue()"><i class="glyphicon glyphicon-play-circle"></i></button>&nbsp;&nbsp;
                 </div>
                 <div class="pull-right" style="position: relative;">
                     <button class="btn simple-button"
@@ -104,10 +105,9 @@
                                               padding: 0px;
                                               overflow: hidden;">
                     <div class="img-video">
-                        <img id="img-prev-video" src="#">
-                        <!--div class="sfondo-grid" ng-controller="YouTubeCtrl"-->
+                        <img id="img-prev-video" ng-src="{??item.src??}" jn-fit-img>
                         <div class="sfondo-grid">
-                            <button id ="play-video1" data-videoid = "{??item.YT_id??}" class="simple-button" style="font-size: 150px; 
+                            <button id ="play-video1" class="simple-button" style="font-size: 150px; 
                                          color:#ffffff;
                                          display: block;
                                          margin: 0 auto;
@@ -116,6 +116,7 @@
                                          margin-top: -75px" ng-click="playVideo()"><span class="glyphicon glyphicon-play" 
                                   aria-hidden="true" 
                                   ></span></button>
+                            <!--youtube videoid="item.YT_id" status = "{??yt.playerStatus??}"></youtube-->
                             <youtube videoid="{??item.YT_id??}" status = "{??yt.playerStatus??}"></youtube>
                         </div>
                     </div>
