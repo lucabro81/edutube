@@ -120,6 +120,8 @@ class HomeController extends ParentController {
     }
     
     public function get_playlists_test(Request $request) {
+
+
         $args = array('mine'         => 'true',
                       'part'         => 'snippet',
                       'maxResults'   => 50,
@@ -162,19 +164,24 @@ class HomeController extends ParentController {
 
         $user = Sentinel::findByCredentials($credentials);
         
-        $decode_results = GW::get_access_token($request->get('code'));        
-        
+        $decode_results = GW::get_access_token($request->get('code'));  
+
         $request->session()->put('access_token', $decode_results['access_token']);
         
         $playlists_prese = false;
         while(!$playlists_prese) {
             try {
+
                 $playlists_id = $this->get_playlists_test($request);
+
+
                 $playlists_prese = true;
                 
             }
             catch(\Exception $e) {
                 $playlists_prese = false;
+
+exit();
             }
         }
         

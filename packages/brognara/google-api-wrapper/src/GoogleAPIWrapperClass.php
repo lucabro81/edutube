@@ -154,9 +154,10 @@ class GoogleAPIWrapperClass {
         $this->curl_opt[CURLOPT_CONNECTTIMEOUT] = 2;
         $this->curl_opt[CURLOPT_RETURNTRANSFER] = 1;
         $this->curl_opt[CURLOPT_URL]            = $this->base_url.'?'.$this->query;
-        
+        $this->curl_opt[CURLOPT_SSL_VERIFYPEER] = false;
+
         $results = $this->cURL($this->curl_opt);
-        
+     
         if ($field == '') {
             return new ArrayClass($results);
         }
@@ -203,15 +204,29 @@ class GoogleAPIWrapperClass {
      * @return type
      */
     private function cURL($args) {
+
         $ch = curl_init();
         
         foreach($args as $key => $value) {
             curl_setopt($ch, $key, $value);
         }
-        
+
         $results = curl_exec($ch);
         
-        curl_close($ch);
+        /*echo "curl_error: ";
+        var_dump(curl_error($ch));
+        echo "zddfs";
+
+        if ($this->base_url=='https://www.googleapis.com/youtube/v3/playlists') {
+            echo "sadfasdf";
+            var_dump($this->base_url);
+            var_dump($results);
+            var_dump("fine");
+            var_dump(curl_getinfo($ch));
+
+            echo curl_errno($curl) . 'qweqw<br/>';
+            exit();
+        }*/
         
         return $results;
     }
